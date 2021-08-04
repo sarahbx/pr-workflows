@@ -2,19 +2,6 @@
 import os
 import github
 
-# extracting all the input from environments
-token = os.environ['INPUT_TOKEN']
-
-github = github.Github(token)
-# GITHUB_REPOSITORY is the repo name in owner/name format in Github Workflow
-repo = github.get_repo(os.environ['GITHUB_REPOSITORY'])
-commit = repo.get_commit(os.environ.get("GITHUB_SHA"))
-pull = list(commit.get_pulls())[0]
-
-print(os.environ.get("GITHUB_EVENT_PATH"))
-print(os.environ.get("GITHUB_SHA"))
-print(os.environ.get("GITHUB_REF"))
-
 
 def size_label_prs(pull):
     label = None
@@ -43,3 +30,16 @@ def size_label_prs(pull):
         print(f"Labeling {pull.title}: {label}")
         [pull.remove_from_labels(lb) for lb in labels if lb.startswith("Size:")]
         pull.add_to_labels(label)
+
+
+if __name__ == "__main__":
+    token = os.environ['INPUT_TOKEN']
+    github = github.Github(token)
+    repo = github.get_repo(os.environ['GITHUB_REPOSITORY'])
+    commit = repo.get_commit(os.environ.get("GITHUB_SHA"))
+    pull = list(commit.get_pulls())[0]
+    size_label_prs(pull=pull)
+
+    print(os.environ.get("GITHUB_EVENT_PATH"))
+    print(os.environ.get("GITHUB_SHA"))
+    print(os.environ.get("GITHUB_REF"))
