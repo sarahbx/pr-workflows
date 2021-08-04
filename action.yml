@@ -4,7 +4,7 @@ name: Label PR
 description: Label PR based on user inputs
 # input parameters to be taken from user
 inputs:
-  token: # token variable available in workflow as env var named GITHUB_TOKEN
+  token: # token variable available in workflow as env var named INPUT_TOKEN
     required: true
     description: Token of the user that creates the issue
     default: ${{ github.token }}
