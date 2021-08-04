@@ -4,10 +4,14 @@ import os
 import github
 
 
+def get_labels(data):
+    return [label["name"] for label in data["pull_request"]["labels"]]
+
+
 def verified_label_prs(pull, commit):
     label = "Verified"
     is_verified = False
-    labels = data["pull_request"]["labels"]
+    labels = get_labels(data=data)
     last_commit = list(pull.get_commits())[-1]
     last_commit_time = datetime.datetime.strptime(last_commit.stats.last_modified, '%a, %d %b %Y %H:%M:%S %Z')
 
@@ -29,24 +33,20 @@ def verified_label_prs(pull, commit):
             pull.remove_from_labels(label)
 
 
-def get_labels(pull):
-    return [label.name for label in pull.get_labels()]
-
-
-def add_reviewers(pull, commit):
+def add_reviewers(data, pull, commit):
     # reviewers = ["myakove", "rnetser", "AdiZav"]
     reviewers = ["myakove"]
-    author = [commit.author.login]
-    current_reviewers_requests = [reviewer.login for reviewer in pull.get_review_requests()[0]]
-    current_reviewers = set([reviewer.user.login for reviewer in pull.get_reviews()])
+    author = [data["sender"]["login"]]
+    current_reviewers_requests = data["pull_request"]["requested_reviewers"]
+    # current_reviewers = set([reviewer.user.login for reviewer in pull.get_reviews()])
     for reviewer in reviewers:
-        if reviewer not in (current_reviewers_requests or current_reviewers or author):
+        if reviewer not in current_reviewers_requests + author:
             print(f"Requesting review from {reviewer} for {pull.title}")
             pull.create_review_request([reviewer])
 
 
 def size_label_prs(data):
-    labels = data["pull_request"]["labels"]
+    labels = get_labels(data=data)
     additions = data["pull_request"]["additions"]
     label = None
     if additions < 20:
