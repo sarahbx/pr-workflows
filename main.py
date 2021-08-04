@@ -1,6 +1,36 @@
+import datetime
 import json
 import os
 import github
+
+
+def verified_label_prs(pull, commit):
+    label = "Verified"
+    is_verified = False
+    labels = get_labels(pull)
+    last_commit = list(pull.get_commits())[-1]
+    last_commit_time = datetime.datetime.strptime(last_commit.stats.last_modified, '%a, %d %b %Y %H:%M:%S %Z')
+
+    verified = [ic for ic in pull.get_issue_comments() if "/verified" in ic.body]
+    if verified:
+        for _verified in verified:
+            is_verified = last_commit_time < _verified.created_at
+            if is_verified:
+                break
+
+    if is_verified:
+        if label not in labels:
+            print(f"Adding {label} to {pull.title}")
+            pull.add_to_labels(label)
+
+    else:
+        if label in labels:
+            print(f"Removing {label} from {pull.title}")
+            pull.remove_from_labels(label)
+
+
+def get_labels(pull):
+    return [label.name for label in pull.get_labels()]
 
 
 def add_reviewers(pull, commit):
@@ -15,7 +45,7 @@ def add_reviewers(pull, commit):
 
 def size_label_prs(pull):
     label = None
-    labels = [label.name for label in pull.get_labels()]
+    labels = get_labels(pull=pull)
     additions = pull.raw_data["additions"]
     if additions < 20:
         label = "Size/XS"
@@ -43,6 +73,8 @@ def size_label_prs(pull):
 
 if __name__ == "__main__":
     token = os.environ['INPUT_TOKEN']
+    event_type = os.environ["GITHUB_EVENT_NAME"]
+    print(event_type)
     print(os.environ.get("GITHUB_EVENT_PATH"))
     print(os.environ.get("GITHUB_SHA"))
     print(os.environ.get("GITHUB_REF"))
