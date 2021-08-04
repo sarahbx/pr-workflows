@@ -9,19 +9,19 @@ def size_label_prs(pull):
     data = pull.raw_data
     additions = data["additions"]
     if additions < 20:
-        label = "Size:XS"
+        label = "Size/XS"
 
     elif additions < 50:
-        label = "Size:S"
+        label = "Size/S"
 
     elif additions < 100:
-        label = "Size:M"
+        label = "Size/M"
 
     elif additions < 300:
-        label = "Size:L"
+        label = "Size/L"
 
     elif additions < 500:
-        label = "Size:XL"
+        label = "Size/XL"
 
     if label in labels:
         return
