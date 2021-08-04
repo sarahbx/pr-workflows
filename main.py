@@ -58,8 +58,8 @@ def add_reviewers(data, pull):
             pull.create_review_request([reviewer])
 
 
-def size_label_prs(data):
-    labels = get_labels(data=data)
+def size_label_prs(data, pull):
+    labels = get_labels(pull=pull)
     additions = data["pull_request"]["additions"]
     label = None
     if additions < 20:
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     if event_type == "pull_request_target":
         remove_verified_label(data=data, pull=pull)
 
-    size_label_prs(data=data)
+    size_label_prs(data=data, pull=pull)
     add_reviewers(data=data, pull=pull)
 
     if event_type == "issue_comment":
