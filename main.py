@@ -34,12 +34,13 @@ def size_label_prs(pull):
 
 if __name__ == "__main__":
     token = os.environ['INPUT_TOKEN']
+    print(os.environ.get("GITHUB_EVENT_PATH"))
+    print(os.environ.get("GITHUB_SHA"))
+    print(os.environ.get("GITHUB_REF"))
     github = github.Github(token)
     repo = github.get_repo(os.environ['GITHUB_REPOSITORY'])
     commit = repo.get_commit(os.environ.get("GITHUB_SHA"))
     pull = list(commit.get_pulls())[0]
     size_label_prs(pull=pull)
 
-    print(os.environ.get("GITHUB_EVENT_PATH"))
-    print(os.environ.get("GITHUB_SHA"))
-    print(os.environ.get("GITHUB_REF"))
+
