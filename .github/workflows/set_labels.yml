@@ -3,7 +3,7 @@ on:
   - push
   - pull_request
 jobs:
-  first-job:
+  set-labels:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
