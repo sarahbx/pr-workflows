@@ -45,10 +45,9 @@ def add_reviewers(pull, commit):
             pull.create_review_request([reviewer])
 
 
-def size_label_prs(pull):
+def size_label_prs(additions):
     label = None
     labels = get_labels(pull=pull)
-    additions = pull.raw_data["additions"]
     if additions < 20:
         label = "Size/XS"
 
@@ -88,7 +87,7 @@ if __name__ == "__main__":
     repo = github.get_repo(os.environ['GITHUB_REPOSITORY'])
     commit = repo.get_commit(os.environ.get("GITHUB_SHA"))
     pull = repo.get_pull(data["number"])
-    size_label_prs(pull=pull)
+    size_label_prs(additions=data["additions"])
     add_reviewers(pull=pull, commit=commit)
 
 
