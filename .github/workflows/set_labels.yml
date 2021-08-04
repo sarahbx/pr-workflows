@@ -4,6 +4,8 @@ on:
   pull_request:
   issue_comment:
     types: [created, edited, deleted]
+  discussion_comment:
+    types: [created, deleted, edited]
 
 jobs:
   set-labels:
