@@ -6,8 +6,7 @@ import github
 def size_label_prs(pull):
     label = None
     labels = [label.name for label in pull.get_labels()]
-    data = pull.raw_data
-    additions = data["additions"]
+    additions = pull.raw_data["additions"]
     if additions < 20:
         label = "Size/XS"
 
