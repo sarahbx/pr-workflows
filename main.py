@@ -3,7 +3,7 @@ import os
 import github
 
 # extracting all the input from environments
-token = os.environ['GITHUB_TOKEN']
+token = os.environ['repo_token']
 
 github = github.Github(token)
 # GITHUB_REPOSITORY is the repo name in owner/name format in Github Workflow
