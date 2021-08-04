@@ -3,6 +3,15 @@ import os
 import github
 
 
+def add_reviewers(pull):
+    current_reviewers_requests = [reviewer.login for reviewer in pull.get_review_requests()[0]]
+    current_reviewers = set([reviewer.user.login for reviewer in pull.get_reviews()])
+    for reviewer in ["myakove", "rnetser"]:
+        if reviewer not in (current_reviewers_requests or current_reviewers):
+            print(f"Requesting review from {reviewer} for {pull.title}")
+            pull.create_review_request([reviewer])
+
+
 def size_label_prs(pull):
     label = None
     labels = [label.name for label in pull.get_labels()]
