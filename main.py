@@ -23,8 +23,8 @@ def remove_verified_label(data, pull):
         pull.remove_from_labels(label)
 
 
-def add_reviewers(data, pull):
-    reviewers = ["myakove"]
+def add_reviewers(data, pull, reviewers):
+    reviewers = [reviewer.strip() for reviewer in reviewers.split(",")]
     author = [data["sender"]["login"]]
     current_reviewers_requests = data["pull_request"]["requested_reviewers"]
     for reviewer in reviewers:
@@ -64,6 +64,8 @@ def size_label_prs(data, pull):
 if __name__ == "__main__":
     token = os.environ['INPUT_TOKEN']
     event_type = os.environ["GITHUB_EVENT_NAME"]
+    reviewers = os.environ['INPUT_REVIEWERS']
+    print(reviewers)
     print(event_type)
     print(os.environ.get("GITHUB_EVENT_PATH"))
     print(os.environ.get("GITHUB_SHA"))
@@ -85,7 +87,7 @@ if __name__ == "__main__":
     if event_type == "pull_request_target":
         remove_verified_label(data=data, pull=pull)
         size_label_prs(data=data, pull=pull)
-        add_reviewers(data=data, pull=pull)
+        add_reviewers(data=data, pull=pull, reviewers=reviewers)
 
     if event_type == "issue_comment":
         labels_by_user_input(data=data, pull=pull)
