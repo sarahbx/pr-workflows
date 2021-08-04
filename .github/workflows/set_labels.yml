@@ -1,4 +1,4 @@
-name: Test Workflow
+name: Labels
 on:
   - pull_request
   - issue_comment
