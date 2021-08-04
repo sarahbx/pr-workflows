@@ -1,4 +1,4 @@
-
+import json
 import os
 import github
 
@@ -37,6 +37,10 @@ if __name__ == "__main__":
     print(os.environ.get("GITHUB_EVENT_PATH"))
     print(os.environ.get("GITHUB_SHA"))
     print(os.environ.get("GITHUB_REF"))
+    with open(os.environ.get("GITHUB_EVENT_PATH"), "r") as fd:
+        data = json.load(fd)
+
+    print(data)
     github = github.Github(token)
     repo = github.get_repo(os.environ['GITHUB_REPOSITORY'])
     commit = repo.get_commit(os.environ.get("GITHUB_SHA"))
