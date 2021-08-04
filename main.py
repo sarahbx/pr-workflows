@@ -7,7 +7,7 @@ import github
 def verified_label_prs(pull, commit):
     label = "Verified"
     is_verified = False
-    labels = get_labels(pull)
+    labels = data["pull_request"]["labels"]
     last_commit = list(pull.get_commits())[-1]
     last_commit_time = datetime.datetime.strptime(last_commit.stats.last_modified, '%a, %d %b %Y %H:%M:%S %Z')
 
@@ -45,9 +45,10 @@ def add_reviewers(pull, commit):
             pull.create_review_request([reviewer])
 
 
-def size_label_prs(additions):
+def size_label_prs(data):
+    labels = data["pull_request"]["labels"]
+    additions = data["pull_request"]["additions"]
     label = None
-    labels = get_labels(pull=pull)
     if additions < 20:
         label = "Size/XS"
 
@@ -87,7 +88,7 @@ if __name__ == "__main__":
     repo = github.get_repo(os.environ['GITHUB_REPOSITORY'])
     commit = repo.get_commit(os.environ.get("GITHUB_SHA"))
     pull = repo.get_pull(data["number"])
-    size_label_prs(additions=data["additions"])
+    size_label_prs(data=data)
     add_reviewers(pull=pull, commit=commit)
 
 
