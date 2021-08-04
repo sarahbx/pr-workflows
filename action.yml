@@ -1,13 +1,19 @@
-name: "Python Container Action Template"
-description: "Get started with Python Container actions"
-author: "Jacob Tomlinson"
+# every action has a name
+name: Label PR
+# description
+description: Label PR based on user inputs
+# input parameters to be taken from user
 inputs:
-  myInput:
-    description: "Input to use"
-    default: "world"
-outputs:
-  myOutput:
-    description: "Output from the action"
+  token: # token variable available in workflow as env var named GITHUB_TOKEN
+    required: true
+    description: Token of the user that creates the issue
+
+# definition how we want our action
 runs:
-  using: "docker"
-  image: "Dockerfile"
+  using: docker # we are saying this action will run on docker
+  image: 'Dockerfile' # we will use our own Dockerfile to build an image and run it.
+
+# for publishing purposes
+#branding: #generates a logo for our action
+#  icon: arrow-down #icon of the image
+#  color: blue # background color of the logo of our action

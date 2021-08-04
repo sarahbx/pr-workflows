@@ -1,14 +1,11 @@
+
 import os
-import requests  # noqa We are just importing this to prove the dependency installed correctly
+import github
 
+# extracting all the input from environments
+token = os.environ['GITHUB_TOKEN']
 
-def main():
-    my_input = os.environ["INPUT_MYINPUT"]
-
-    my_output = f"Hello {my_input}"
-
-    print(f"::set-output name=myOutput::{my_output}")
-
-
-if __name__ == "__main__":
-    main()
+github = github.Github(token)
+# GITHUB_REPOSITORY is the repo name in owner/name format in Github Workflow
+repo = github.get_repo(os.environ['GITHUB_REPOSITORY'])
+print(os.environ.get("GITHUB_EVENT_PATH"))
