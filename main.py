@@ -34,10 +34,12 @@ def get_labels(pull):
 
 
 def add_reviewers(pull, commit):
+    # reviewers = ["myakove", "rnetser", "AdiZav"]
+    reviewers = ["myakove"]
     author = [commit.author.login]
     current_reviewers_requests = [reviewer.login for reviewer in pull.get_review_requests()[0]]
     current_reviewers = set([reviewer.user.login for reviewer in pull.get_reviews()])
-    for reviewer in ["myakove", "rnetser", "AdiZav"]:
+    for reviewer in reviewers:
         if reviewer not in (current_reviewers_requests or current_reviewers or author):
             print(f"Requesting review from {reviewer} for {pull.title}")
             pull.create_review_request([reviewer])
