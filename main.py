@@ -89,6 +89,6 @@ if __name__ == "__main__":
     commit = repo.get_commit(os.environ.get("GITHUB_SHA"))
     pull = repo.get_pull(data["number"])
     size_label_prs(data=data)
-    add_reviewers(pull=pull, commit=commit)
+    add_reviewers(data=data, pull=pull, commit=commit)
 
 
