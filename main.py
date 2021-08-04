@@ -1,4 +1,3 @@
-import datetime
 import json
 import os
 import github
@@ -15,8 +14,12 @@ def labels_by_user_input(data, pull):
         print(f"Adding {label} to {pull.title}")
         pull.add_to_labels(label)
 
+    if "/unverified" in body:
+        print(f"Removing {label} from {pull.title}")
+        remove_verified_label(pull=pull)
 
-def remove_verified_label(data, pull):
+
+def remove_verified_label(pull):
     label = "Verified"
     labels = get_labels(pull=pull)
     if label in labels:
@@ -65,15 +68,9 @@ if __name__ == "__main__":
     token = os.environ['INPUT_TOKEN']
     event_type = os.environ["GITHUB_EVENT_NAME"]
     reviewers = os.environ['INPUT_REVIEWERS']
-    print(reviewers)
-    print(event_type)
-    print(os.environ.get("GITHUB_EVENT_PATH"))
-    print(os.environ.get("GITHUB_SHA"))
-    print(os.environ.get("GITHUB_REF"))
     with open(os.environ.get("GITHUB_EVENT_PATH"), "r") as fd:
         data = json.load(fd)
 
-    print(data)
     github = github.Github(token)
     repo = github.get_repo(os.environ['GITHUB_REPOSITORY'])
     commit = repo.get_commit(os.environ.get("GITHUB_SHA"))
@@ -85,7 +82,7 @@ if __name__ == "__main__":
     pull = repo.get_pull(issue_number)
 
     if event_type == "pull_request_target":
-        remove_verified_label(data=data, pull=pull)
+        remove_verified_label(pull=pull)
         size_label_prs(data=data, pull=pull)
         add_reviewers(data=data, pull=pull, reviewers=reviewers)
 
