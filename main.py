@@ -100,7 +100,11 @@ if __name__ == "__main__":
     github = github.Github(token)
     repo = github.get_repo(os.environ['GITHUB_REPOSITORY'])
     commit = repo.get_commit(os.environ.get("GITHUB_SHA"))
-    issue_number = data.get("number", {}).get("issue")["number"]
+    try:
+        issue_number = data["number"]
+    except KeyError:
+        issue_number = data["issue"]["number"]
+
     pull = repo.get_pull(issue_number)
 
     if event_type == "pull_request_target":
