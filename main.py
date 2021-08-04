@@ -85,7 +85,12 @@ if __name__ == "__main__":
     github = github.Github(token)
     repo = github.get_repo(os.environ['GITHUB_REPOSITORY'])
     commit = repo.get_commit(os.environ.get("GITHUB_SHA"))
-    pull = repo.get_pull(data["number"])
+    try:
+        issue_number = data["number"]
+    except KeyError:
+        issue_number = data["issue"]["number"]
+
+    pull = repo.get_pull(issue_number)
     size_label_prs(data=data)
     add_reviewers(data=data, pull=pull)
     verified_label_prs(pull=pull)
