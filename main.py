@@ -23,31 +23,6 @@ def remove_verified_label(data, pull):
         pull.remove_from_labels(label)
 
 
-# def verified_label_prs(pull):
-#     label = "Verified"
-#     is_verified = False
-#     labels = get_labels(data=data)
-#     last_commit = list(pull.get_commits())[-1]
-#     last_commit_time = datetime.datetime.strptime(last_commit.stats.last_modified, '%a, %d %b %Y %H:%M:%S %Z')
-#
-#     verified = [ic for ic in pull.get_issue_comments() if "/verified" in ic.body]
-#     if verified:
-#         for _verified in verified:
-#             is_verified = last_commit_time < _verified.created_at
-#             if is_verified:
-#                 break
-#
-#     if is_verified:
-#         if label not in labels:
-#             print(f"Adding {label} to {pull.title}")
-#             pull.add_to_labels(label)
-#
-#     else:
-#         if label in labels:
-#             print(f"Removing {label} from {pull.title}")
-#             pull.remove_from_labels(label)
-
-
 def add_reviewers(data, pull):
     reviewers = ["myakove"]
     author = [data["sender"]["login"]]
