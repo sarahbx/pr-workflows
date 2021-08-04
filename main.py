@@ -34,11 +34,9 @@ def verified_label_prs(pull):
 
 
 def add_reviewers(data, pull):
-    # reviewers = ["myakove", "rnetser", "AdiZav"]
     reviewers = ["myakove"]
     author = [data["sender"]["login"]]
     current_reviewers_requests = data["pull_request"]["requested_reviewers"]
-    # current_reviewers = set([reviewer.user.login for reviewer in pull.get_reviews()])
     for reviewer in reviewers:
         if reviewer not in current_reviewers_requests + author:
             print(f"Requesting review from {reviewer} for {pull.title}")
