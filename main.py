@@ -8,7 +8,7 @@ def get_labels(data):
     return [label["name"] for label in data["pull_request"]["labels"]]
 
 
-def verified_label_prs(pull, commit):
+def verified_label_prs(pull):
     label = "Verified"
     is_verified = False
     labels = get_labels(data=data)
@@ -90,5 +90,6 @@ if __name__ == "__main__":
     pull = repo.get_pull(data["number"])
     size_label_prs(data=data)
     add_reviewers(data=data, pull=pull)
+    verified_label_prs(pull=pull)
 
 
