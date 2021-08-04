@@ -8,6 +8,9 @@ inputs:
     required: true
     description: Token of the user that creates the issue
     default: ${{ github.token }}
+  reviewers:
+    required: false
+    description: Reviewers to add to each PR.
 
 # definition how we want our action
 runs:

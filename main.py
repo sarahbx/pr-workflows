@@ -64,6 +64,8 @@ def size_label_prs(data, pull):
 if __name__ == "__main__":
     token = os.environ['INPUT_TOKEN']
     event_type = os.environ["GITHUB_EVENT_NAME"]
+    reviewers = os.environ['INPUT_REVIEWERS']
+    print(reviewers)
     print(event_type)
     print(os.environ.get("GITHUB_EVENT_PATH"))
     print(os.environ.get("GITHUB_SHA"))
