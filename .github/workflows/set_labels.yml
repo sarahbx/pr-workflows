@@ -2,6 +2,7 @@ name: Test Workflow
 on:
   - pull_request
   - issue_comment
+  - discussion_comment
 jobs:
   set-labels:
     runs-on: ubuntu-latest
