@@ -1,14 +1,10 @@
-name: Labels
+name: Add Reviewers
 on:
   pull_request_target:
   pull_request:
-  issue_comment:
-    types: [created, edited, deleted]
-  discussion_comment:
-    types: [created, deleted, edited]
 
 jobs:
-  set-labels:
+  add-reviewers:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
