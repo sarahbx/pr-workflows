@@ -109,9 +109,8 @@ if __name__ == "__main__":
 
     if event_type == "pull_request_target":
         remove_verified_label(data=data, pull=pull)
-
-    size_label_prs(data=data, pull=pull)
-    add_reviewers(data=data, pull=pull)
+        size_label_prs(data=data, pull=pull)
+        add_reviewers(data=data, pull=pull)
 
     if event_type == "issue_comment":
         labels_by_user_input(data=data, pull=pull)
