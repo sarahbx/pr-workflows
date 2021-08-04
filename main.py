@@ -4,21 +4,21 @@ import os
 import github
 
 
-def get_labels(data):
-    return [label["name"] for label in data["pull_request"]["labels"]]
+def get_labels(pull):
+    return [label.name for label in pull.get_labels()]
 
 
 def labels_by_user_input(data, pull):
     body = data["comment"]["body"]
     label = "Verified"
-    if "/verified" in body and label not in get_labels(data=data):
+    if "/verified" in body and label not in get_labels(pull=pull):
         print(f"Adding {label} to {pull.title}")
         pull.add_to_labels(label)
 
 
 def remove_verified_label(data, pull):
     label = "Verified"
-    labels = get_labels(data=data)
+    labels = get_labels(pull=pull)
     if label in labels:
         pull.remove_from_labels(label)
 
