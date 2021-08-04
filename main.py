@@ -24,6 +24,7 @@ def remove_verified_label(data, pull):
 
 
 def add_reviewers(data, pull, reviewers):
+    reviewers = [reviewer.strip() for reviewer in reviewers.split(",")]
     author = [data["sender"]["login"]]
     current_reviewers_requests = data["pull_request"]["requested_reviewers"]
     for reviewer in reviewers:
