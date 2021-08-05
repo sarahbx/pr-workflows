@@ -2,10 +2,16 @@ import json
 import os
 
 import github
+import re
 
 from src.add_reviewers import add_reviewers
 from src.labels_by_user_input import labels_by_user_input, remove_verified_label
 from src.size_label_prs import size_label_prs
+
+
+def block_offensive_lanague(data):
+    offensive_words_compile = re.compile("black[ -]?list|white[ -]?list|master|slave")
+    print(data)
 
 
 if __name__ == "__main__":
@@ -34,3 +40,8 @@ if __name__ == "__main__":
 
     elif action == "size_label_prs":
         size_label_prs(data=data, pull=pull)
+        add_reviewers(data=data, pull=pull, reviewers=reviewers)
+
+    elif action == "block_offensive_lanague":
+        block_offensive_lanague(data=data)
+
