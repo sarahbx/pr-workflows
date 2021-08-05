@@ -25,7 +25,7 @@ if __name__ == "__main__":
         pull = repo.get_pull(data["issue"]["number"])
 
     if event_type in ("pull_request_target", "pull_request"):
-        remove_verified_label(pull - pull)
+        remove_verified_label(pull=pull)
 
     if action == "labels_by_user_input":
         labels_by_user_input(data=data, pull=pull)
