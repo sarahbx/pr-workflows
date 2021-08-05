@@ -3,18 +3,13 @@ import os
 
 import github
 
-ACTIONS = {
-    'labels_by_user_input':labels_by_user_input,
-    'add_reviewers':add_reviewers,
-    'size_label_prs': size_label_prs
-}
 
 def get_labels(pull):
     return [label.name for label in pull.get_labels()]
 
 
 def labels_by_user_input(**kwargs):
-    data, pull = kwargs['data'], kwargs['pull']
+    data, pull = kwargs["data"], kwargs["pull"]
     body = data["comment"]["body"]
     label = "Verified"
     if "/verified" in body and label not in get_labels(pull=pull):
@@ -34,7 +29,7 @@ def remove_verified_label(pull):
 
 
 def add_reviewers(**kwargs):
-    data, pull, reviewers = kwargs['data'], kwargs['pull'], kwargs['reviewers']
+    data, pull, reviewers = kwargs["data"], kwargs["pull"], kwargs["reviewers"]
     reviewers = [reviewer.strip() for reviewer in reviewers.split(",")]
     author = [data["sender"]["login"]]
     current_reviewers_requests = data["pull_request"]["requested_reviewers"]
@@ -45,7 +40,7 @@ def add_reviewers(**kwargs):
 
 
 def size_label_prs(**kwargs):
-    data, pull = kwargs['data'], kwargs['pull']
+    data, pull = kwargs["data"], kwargs["pull"]
     labels = get_labels(pull=pull)
     additions = data["pull_request"]["additions"]
     label = None
@@ -73,10 +68,17 @@ def size_label_prs(**kwargs):
         pull.add_to_labels(label)
 
 
+ACTIONS = {
+    "labels_by_user_input": labels_by_user_input,
+    "add_reviewers": add_reviewers,
+    "size_label_prs": size_label_prs,
+}
+
+
 if __name__ == "__main__":
     token = os.environ["INPUT_TOKEN"]
-    reviewers = os.environ['INPUT_REVIEWERS']
-    action = os.environ['INPUT_ACTION']
+    reviewers = os.environ["INPUT_REVIEWERS"]
+    action = os.environ["INPUT_ACTION"]
     with open(os.environ.get("GITHUB_EVENT_PATH"), "r") as fd:
         data = json.load(fd)
 
