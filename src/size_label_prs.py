@@ -1,8 +1,7 @@
 from src.utils import get_labels
 
 
-def size_label_prs(**kwargs):
-    data, pull = kwargs["data"], kwargs["pull"]
+def size_label_prs(data, pull):
     labels = get_labels(pull=pull)
     additions = data["pull_request"]["additions"]
     label = None

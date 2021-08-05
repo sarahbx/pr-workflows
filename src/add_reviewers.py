@@ -1,5 +1,4 @@
-def add_reviewers(**kwargs):
-    data, pull, reviewers = kwargs["data"], kwargs["pull"], kwargs["reviewers"]
+def add_reviewers(data, pull, reviewers):
     reviewers = [reviewer.strip() for reviewer in reviewers.split(",")]
     author = [data["sender"]["login"]]
     current_reviewers_requests = data["pull_request"]["requested_reviewers"]
