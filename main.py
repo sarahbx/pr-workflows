@@ -18,17 +18,15 @@ if __name__ == "__main__":
     token = os.environ["INPUT_TOKEN"]
     reviewers = os.environ["INPUT_REVIEWERS"]
     action = os.environ["INPUT_ACTION"]
-    with open(os.environ.get("GITHUB_EVENT_PATH"), "r") as fd:
+    with open(os.environ["GITHUB_EVENT_PATH"], "r") as fd:
         data = json.load(fd)
 
     github = github.Github(token)
     repo = github.get_repo(os.environ["GITHUB_REPOSITORY"])
-    commit = repo.get_commit(os.environ.get("GITHUB_SHA"))
+    commit = repo.get_commit(os.environ["GITHUB_SHA"])
     try:
-        issue_number = data["number"]
+        pull = repo.get_pull(data["number"])
     except KeyError:
-        issue_number = data["issue"]["number"]
-
-    pull = repo.get_pull(issue_number)
+        pull = repo.get_pull(data["issue"]["number"])
 
     ACTIONS[action](data=data, pull=pull, reviewers=reviewers)
