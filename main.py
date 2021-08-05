@@ -1,5 +1,6 @@
 import json
 import os
+
 import github
 
 ACTIONS = {
@@ -73,15 +74,15 @@ def size_label_prs(**kwargs):
 
 
 if __name__ == "__main__":
-    token = os.environ['INPUT_TOKEN']
+    token = os.environ["INPUT_TOKEN"]
     event_type = os.environ["GITHUB_EVENT_NAME"]
-    reviewers = os.environ['INPUT_REVIEWERS']
-    action = os.environ['INPUT_ACTION']
+    reviewers = os.environ["INPUT_REVIEWERS"]
+    action = os.environ["INPUT_ACTION"]
     with open(os.environ.get("GITHUB_EVENT_PATH"), "r") as fd:
         data = json.load(fd)
 
     github = github.Github(token)
-    repo = github.get_repo(os.environ['GITHUB_REPOSITORY'])
+    repo = github.get_repo(os.environ["GITHUB_REPOSITORY"])
     commit = repo.get_commit(os.environ.get("GITHUB_SHA"))
     try:
         issue_number = data["number"]
