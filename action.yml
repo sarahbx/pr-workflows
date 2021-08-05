@@ -1,13 +1,17 @@
 # every action has a name
-name: Label PR
+name: Default actions
 # description
-description: Label PR based on user inputs
+description: Runs main.py, runs only functions specified in 'action'
 # input parameters to be taken from user
 inputs:
   token: # token variable available in workflow as env var named INPUT_TOKEN
     required: true
     description: Token of the user that creates the issue
     default: ${{ github.token }}
+    # This way you can create different workflows and still use the same action
+  action:
+    required: true
+    description: Desired action. i.e - add_reviewers, labels_by_user_inpurt, size_label_prs
   reviewers:
     required: false
     description: Reviewers to add to each PR.
