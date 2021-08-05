@@ -2,7 +2,7 @@ name: Block Offensive Lanague
 on: [pull_request_target, pull_request]
 
 jobs:
-  pr_actions:
+  offensive_language_actions:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
