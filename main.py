@@ -3,70 +3,9 @@ import os
 
 import github
 
-
-def get_labels(pull):
-    return [label.name for label in pull.get_labels()]
-
-
-def labels_by_user_input(**kwargs):
-    data, pull = kwargs["data"], kwargs["pull"]
-    body = data["comment"]["body"]
-    label = "Verified"
-    if "/verified" in body and label not in get_labels(pull=pull):
-        print(f"Adding {label} to {pull.title}")
-        pull.add_to_labels(label)
-
-    if "/unverified" in body:
-        print(f"Removing {label} from {pull.title}")
-        remove_verified_label(pull=pull)
-
-
-def remove_verified_label(pull):
-    label = "Verified"
-    labels = get_labels(pull=pull)
-    if label in labels:
-        pull.remove_from_labels(label)
-
-
-def add_reviewers(**kwargs):
-    data, pull, reviewers = kwargs["data"], kwargs["pull"], kwargs["reviewers"]
-    reviewers = [reviewer.strip() for reviewer in reviewers.split(",")]
-    author = [data["sender"]["login"]]
-    current_reviewers_requests = data["pull_request"]["requested_reviewers"]
-    for reviewer in reviewers:
-        if reviewer not in current_reviewers_requests + author:
-            print(f"Requesting review from {reviewer} for {pull.title}")
-            pull.create_review_request([reviewer])
-
-
-def size_label_prs(**kwargs):
-    data, pull = kwargs["data"], kwargs["pull"]
-    labels = get_labels(pull=pull)
-    additions = data["pull_request"]["additions"]
-    label = None
-    if additions < 20:
-        label = "Size/XS"
-
-    elif additions < 50:
-        label = "Size/S"
-
-    elif additions < 100:
-        label = "Size/M"
-
-    elif additions < 300:
-        label = "Size/L"
-
-    elif additions < 500:
-        label = "Size/XL"
-
-    if label in labels:
-        return
-
-    else:
-        print(f"Labeling {pull.title}: {label}")
-        [pull.remove_from_labels(lb) for lb in labels if lb.startswith("Size/")]
-        pull.add_to_labels(label)
-
+from src.add_reviewers import add_reviewers
+from src.labels_by_user_input import labels_by_user_input
+from src.size_label_prs import size_label_prs
 
 ACTIONS = {
     "labels_by_user_input": labels_by_user_input,
