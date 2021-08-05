@@ -15,7 +15,7 @@ jobs:
         # pass user input as arguments
         with:
           token: ${{secrets.REPO_TOKEN}} # default token in GitHub Workflow
-          reviewers: myakove
+          reviewers: myakove,rnetser,AdiZav
           action: add_reviewers
       - name: Assign Size Labels
         uses: ./
