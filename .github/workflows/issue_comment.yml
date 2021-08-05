@@ -1,4 +1,4 @@
-name: Assign Reviewers
+name: Label By comment
 on:
   issue_comment:
     types: [created, edited]
