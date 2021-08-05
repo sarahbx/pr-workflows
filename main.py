@@ -24,7 +24,7 @@ if __name__ == "__main__":
     except KeyError:
         pull = repo.get_pull(data["issue"]["number"])
 
-    if event_type in ("pull_request_target", "pull_request"):
+    if event_type == "pull_request_target":
         remove_verified_label(pull=pull)
 
     if action == "labels_by_user_input":
