@@ -1,4 +1,4 @@
-from github.GithubException import GithubException
+import github
 
 
 def add_reviewers(data, pull, reviewers):
@@ -7,6 +7,6 @@ def add_reviewers(data, pull, reviewers):
         try:
             print(f"Requesting review from {reviewer} for {pull.title}")
             pull.create_review_request([reviewer])
-        except GithubException as exp:
+        except github.GithubException as exp:
             # author ot the user who pushed cannot be add as reviewers
             print(f"Failed to add {reviewer}: {exp}")
