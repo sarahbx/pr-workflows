@@ -1,5 +1,5 @@
 name: Block Offensive Language
-on: [pull_request_target, pull_request]
+on: pull_request_target
 
 jobs:
   offensive_language_actions:
