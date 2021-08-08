@@ -16,3 +16,4 @@ jobs:
         with:
           token: ${{secrets.REPO_TOKEN}} # default token in GitHub Workflow
           action: block_offensive_lanague
+          files: ${{ steps.filter.outputs.changed_files }}

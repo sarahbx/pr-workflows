@@ -9,11 +9,12 @@ from src.labels_by_user_input import labels_by_user_input, remove_verified_label
 from src.size_label_prs import size_label_prs
 
 
-def block_offensive_lanague(pull):
+def block_offensive_lanague(pull, files):
+    print(files)
     re.compile("black[ -]?list|white[ -]?list|master|slave")
 
     for _file in pull.get_files():
-        _file.raw_data["patch"]
+        _file.patch
 
 
 if __name__ == "__main__":
@@ -45,4 +46,5 @@ if __name__ == "__main__":
         add_reviewers(data=data, pull=pull, reviewers=reviewers)
 
     elif action == "block_offensive_lanague":
-        block_offensive_lanague(data=data)
+        files = os.environ["INPUT_FILES"]
+        block_offensive_lanague(pull=pull, files=files)
