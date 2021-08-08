@@ -18,7 +18,7 @@ def block_offensive_lanague(pull):
             match = re.search(offensive_words, line)
             if match:
                 print(
-                    f"File: {file_name} {idx + 1},{match.span()[0]}\n    "
+                    f"File: {file_name}:{idx + 1}:{match.span()[0]}\n    "
                     f"Found offensive words [{match.group()}]"
                 )
                 offensive_words_match = True
