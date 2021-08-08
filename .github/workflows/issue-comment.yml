@@ -10,5 +10,5 @@ jobs:
       - name: Label issue
         uses: ./
         with:
-          token: ${{secrets.REPO_TOKEN}} # default token in GitHub Workflow
+          token: ${{secrets.REPO_TOKEN}}
           action: labels_by_user_input

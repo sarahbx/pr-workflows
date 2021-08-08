@@ -7,24 +7,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Assign Reviewers
-        # we can give directory path that contains action.yaml or repo address in username/repository_name@version format
-        # in our case it would be nashmaniac/create-issue-action@v1.0 where v1.0 is the version of action
-        # for now we will give directory path. The directory must contain action.yaml
-        uses: ./
-        # pass user input as arguments
-        with:
-          token: ${{secrets.REPO_TOKEN}} # default token in GitHub Workflow
-          reviewers: myakove,rnetser,AdiZav
-          action: add_reviewers
-      - name: Assign Size Labels
-        uses: ./
-        with:
-          token: ${{secrets.REPO_TOKEN}} # default token in GitHub Workflow
-          reviewers: myakove
-          action: size_label_prs
+
       - name: Remove Verified Label
         uses: ./
         with:
-          token: ${{secrets.REPO_TOKEN}} # default token in GitHub Workflow
+          token: ${{secrets.REPO_TOKEN}}
           action: remove_verified_label
+
+      - name: Assign Size Labels
+        uses: ./
+        with:
+          token: ${{secrets.REPO_TOKEN}}
+          reviewers: myakove
+          action: size_label_prs
+
+      - name: Assign Reviewers
+        uses: ./
+        with:
+          token: ${{secrets.REPO_TOKEN}}
+          reviewers: myakove,rnetser,AdiZav
+          action: add_reviewers
