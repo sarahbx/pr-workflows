@@ -10,10 +10,8 @@ def block_offensive_lanague(pull):
 
     for _file in pull.get_files():
         file_name = _file.filename
-        print(file_name)
-        print(__file__)
         # Exclude current file from check
-        if __file__ == file_name:
+        if __file__.split("/")[-1] == file_name.split("/")[-1]:
             continue
 
         for idx, line in enumerate(requests.get(_file.raw_url).text.splitlines()):
