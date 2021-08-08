@@ -1,4 +1,3 @@
-import os
 import re
 import sys
 
@@ -6,9 +5,6 @@ import sys
 def block_offensive_language(pull):
     offensive_words_match = False
     offensive_words = re.compile("black[ -]?list|white[ -]?list|master|slave")
-    print(os.path.abspath(os.curdir))
-    print(os.listdir())
-    print(list(pull.get_files()))
 
     for _file in pull.get_files():
         file_name = _file.filename
@@ -18,7 +14,6 @@ def block_offensive_language(pull):
 
         with open(file_name, "r") as fd:
             for idx, line in enumerate(fd.readlines()):
-                print(line)
                 match = re.search(offensive_words, line)
                 if match:
                     print(
