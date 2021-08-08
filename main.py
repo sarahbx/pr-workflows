@@ -1,17 +1,19 @@
 import json
 import os
+import re
 
 import github
-import re
 
 from src.add_reviewers import add_reviewers
 from src.labels_by_user_input import labels_by_user_input, remove_verified_label
 from src.size_label_prs import size_label_prs
 
 
-def block_offensive_lanague(data):
-    offensive_words_compile = re.compile("black[ -]?list|white[ -]?list|master|slave")
-    print(data)
+def block_offensive_lanague(pull):
+    re.compile("black[ -]?list|white[ -]?list|master|slave")
+
+    for _file in pull.get_files():
+        _file.raw_data["patch"]
 
 
 if __name__ == "__main__":
@@ -44,4 +46,3 @@ if __name__ == "__main__":
 
     elif action == "block_offensive_lanague":
         block_offensive_lanague(data=data)
-
