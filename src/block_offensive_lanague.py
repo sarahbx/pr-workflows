@@ -18,6 +18,7 @@ def block_offensive_language(pull):
 
         with open(file_name, "r") as fd:
             for idx, line in enumerate(fd.readlines()):
+                print(line)
                 match = re.search(offensive_words, line)
                 if match:
                     print(
