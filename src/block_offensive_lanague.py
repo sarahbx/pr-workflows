@@ -9,8 +9,7 @@ def block_offensive_lanague(pull):
     offensive_words = re.compile("black[ -]?list|white[ -]?list|master|slave")
 
     for _file in pull.get_files():
-        print(__file__)
-        if "offensive_language_actions.py" in __file__:
+        if "block_offensive_lanague.py" in __file__:
             continue
 
         for idx, line in enumerate(requests.get(_file.raw_url).text.splitlines()):
