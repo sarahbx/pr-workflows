@@ -10,6 +10,8 @@ def block_offensive_lanague(pull):
 
     for _file in pull.get_files():
         file_name = _file.filename
+        print(file_name)
+        print(__file__)
         # Exclude current file from check
         if __file__ == file_name:
             continue
