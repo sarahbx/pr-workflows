@@ -1,3 +1,4 @@
+import os
 import re
 import sys
 
@@ -5,6 +6,8 @@ import sys
 def block_offensive_lanague(pull):
     offensive_words_match = False
     offensive_words = re.compile("black[ -]?list|white[ -]?list|master|slave")
+    print(os.path.abspath(os.curdir))
+    print(os.listdir())
 
     for _file in pull.get_files():
         file_name = _file.filename
