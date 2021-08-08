@@ -1,3 +1,4 @@
+import os
 import re
 import sys
 
@@ -9,6 +10,7 @@ def block_offensive_lanague(pull):
     offensive_words = re.compile("black[ -]?list|white[ -]?list|master|slave")
 
     for _file in pull.get_files():
+        print(os.listdir())
         file_name = _file.filename
         # Exclude current file from check
         if __file__.split("/")[-1] == file_name.split("/")[-1]:
