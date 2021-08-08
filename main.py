@@ -4,7 +4,7 @@ import os
 import github
 
 from src.add_reviewers import add_reviewers
-from src.block_offensive_lanague import block_offensive_lanague
+from src.block_offensive_lanague import block_offensive_language
 from src.labels_by_user_input import labels_by_user_input, remove_verified_label
 from src.size_label_prs import size_label_prs
 
@@ -36,5 +36,5 @@ if __name__ == "__main__":
     elif action == "size_label_prs":
         size_label_prs(data=data, pull=pull)
 
-    elif action == "block_offensive_lanague":
-        block_offensive_lanague(pull=pull)
+    elif action == "block_offensive_language":
+        block_offensive_language(pull=pull)

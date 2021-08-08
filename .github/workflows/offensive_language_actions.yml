@@ -11,4 +11,4 @@ jobs:
         uses: ./
         with:
           token: ${{secrets.REPO_TOKEN}}
-          action: block_offensive_lanague
+          action: block_offensive_language

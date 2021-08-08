@@ -3,11 +3,12 @@ import re
 import sys
 
 
-def block_offensive_lanague(pull):
+def block_offensive_language(pull):
     offensive_words_match = False
     offensive_words = re.compile("black[ -]?list|white[ -]?list|master|slave")
     print(os.path.abspath(os.curdir))
     print(os.listdir())
+    print(list(pull.get_files()))
 
     for _file in pull.get_files():
         file_name = _file.filename
