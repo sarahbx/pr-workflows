@@ -13,7 +13,7 @@ def block_offensive_lanague(pull):
             continue
 
         with open(file_name, "r") as fd:
-            for idx, line in enumerate(fd.splitlines()):
+            for idx, line in enumerate(fd.readlines()):
                 match = re.search(offensive_words, line)
                 if match:
                     print(
