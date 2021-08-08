@@ -35,7 +35,6 @@ if __name__ == "__main__":
 
     elif action == "size_label_prs":
         size_label_prs(data=data, pull=pull)
-        add_reviewers(data=data, pull=pull, reviewers=reviewers)
 
     elif action == "block_offensive_lanague":
         block_offensive_lanague(pull=pull)
