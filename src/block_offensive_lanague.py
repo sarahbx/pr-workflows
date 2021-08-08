@@ -10,7 +10,7 @@ def block_offensive_lanague(pull):
 
     for _file in pull.get_files():
         print(__file__)
-        if "offensive_language_actions.yml" in __file__:
+        if "offensive_language_actions.py" in __file__:
             continue
 
         for idx, line in enumerate(requests.get(_file.raw_url).text.splitlines()):
