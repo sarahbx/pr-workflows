@@ -1,20 +1,12 @@
 import json
 import os
-import re
 
 import github
 
 from src.add_reviewers import add_reviewers
+from src.block_offensive_lanague import block_offensive_lanague
 from src.labels_by_user_input import labels_by_user_input, remove_verified_label
 from src.size_label_prs import size_label_prs
-
-
-def block_offensive_lanague(pull, files):
-    print(files)
-    re.compile("black[ -]?list|white[ -]?list|master|slave")
-
-    for _file in pull.get_files():
-        _file.patch
 
 
 if __name__ == "__main__":
@@ -47,4 +39,4 @@ if __name__ == "__main__":
 
     elif action == "block_offensive_lanague":
         files = os.environ["INPUT_FILES"]
-        block_offensive_lanague(pull=pull, files=files)
+        block_offensive_lanague(pull=pull)

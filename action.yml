@@ -15,9 +15,6 @@ inputs:
   reviewers:
     required: false
     description: Reviewers to add to each PR.
-  files:
-    required: false
-    description: List of changed files.
 
 # definition how we want our action
 runs:
