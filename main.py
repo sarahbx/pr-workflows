@@ -38,5 +38,4 @@ if __name__ == "__main__":
         add_reviewers(data=data, pull=pull, reviewers=reviewers)
 
     elif action == "block_offensive_lanague":
-        files = os.environ["INPUT_FILES"]
         block_offensive_lanague(pull=pull)
