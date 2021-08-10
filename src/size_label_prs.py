@@ -25,5 +25,5 @@ def size_label_prs(data, pull):
 
     else:
         print(f"Labeling {pull.title}: {label}")
-        [pull.remove_from_labels(lb) for lb in labels if lb.startswith("Size/")]
+        [pull.remove_from_labels(lb) for lb in labels if lb.lower().startswith("size/")]
         pull.add_to_labels(label)
