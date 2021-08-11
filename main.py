@@ -11,14 +11,13 @@ from src.size_label_prs import size_label_prs
 
 
 def _get_pull_from_data(event_data):
-    print(type(event_data))
-    pull_number = (
-        event_data.get("number", event_data)
-        .get("issue", event_data)
-        .get("number", event_data)
-        .get("pull_request")
-        .get("number")
-    )
+    pull_number = data.get("number")
+    if not pull_number:
+        pull_number = data.get("issue", {}).get("number")
+
+    if not pull_number:
+        pull_number = data.get("pull_request", {}).get("number")
+
     return repo.get_pull(pull_number)
 
 
@@ -32,13 +31,6 @@ if __name__ == "__main__":
         data = json.load(fd)
 
     pull = _get_pull_from_data(event_data=data)
-    # try:
-    #     pull = repo.get_pull(data["number"])
-    # except KeyError:
-    #     try:
-    #         pull = repo.get_pull(data["issue"]["number"])
-    #     except KeyError:
-    #         pull = repo.get_pull(data["pull_request"]["number"])
 
     if action == "remove_verified_label":
         remove_verified_label(pull=pull)
