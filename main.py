@@ -19,6 +19,8 @@ if __name__ == "__main__":
     with open(os.environ["GITHUB_EVENT_PATH"], "r") as fd:
         data = json.load(fd)
 
+    print(data)
+
     try:
         pull = repo.get_pull(data["number"])
     except KeyError:

@@ -2,7 +2,7 @@ name: Block merge if not approved
 on: pull_request_review
 
 jobs:
-  blovk_pr_if_not_approved:
+  block_pr_if_not_approved:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
