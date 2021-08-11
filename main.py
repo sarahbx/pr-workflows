@@ -54,5 +54,5 @@ if __name__ == "__main__":
         block_offensive_language(pull=pull)
 
     if action == "block_merge_no_approve":
-        block_merge_no_approve(pull=pull)
         remove_approved_on_code_change(pull=pull)
+        block_merge_no_approve(pull=pull)
