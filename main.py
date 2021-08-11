@@ -11,6 +11,7 @@ from src.size_label_prs import size_label_prs
 
 
 def _get_pull_from_data(event_data):
+    print(type(event_data))
     pull_number = (
         event_data.get("number", event_data)
         .get("issue", event_data)
