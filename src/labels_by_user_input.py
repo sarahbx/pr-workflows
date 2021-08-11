@@ -1,5 +1,5 @@
 from src.constants import BLOCK_MERGE_VERIFY_CONTEXT
-from src.utils import get_labels, set_commit_status_pending
+from src.utils import get_labels, set_commit_status_pending_no_verify
 
 
 LABEL_VERIFIED = "Verified"
@@ -26,4 +26,4 @@ def labels_by_user_input(data, pull):
 
     if "/unverified" in body:
         remove_verified_label(pull=pull)
-        set_commit_status_pending(commit=last_commit)
+        set_commit_status_pending_no_verify(commit=last_commit)
