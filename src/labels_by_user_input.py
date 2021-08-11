@@ -1,7 +1,5 @@
+from src.constants import LABEL_VERIFIED
 from src.utils import get_labels
-
-
-LABEL_VERIFIED = "Verified"
 
 
 def remove_verified_label(pull):

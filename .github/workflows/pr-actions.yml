@@ -27,3 +27,9 @@ jobs:
           token: ${{secrets.REPO_TOKEN}}
           reviewers: myakove,rnetser,AdiZav
           action: add_reviewers
+
+      - name: Block Merge (No Verified Label)
+        uses: ./
+        with:
+          token: ${{secrets.REPO_TOKEN}}
+          action: block_merge_no_verify
