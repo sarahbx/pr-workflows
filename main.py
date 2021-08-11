@@ -19,12 +19,13 @@ if __name__ == "__main__":
     with open(os.environ["GITHUB_EVENT_PATH"], "r") as fd:
         data = json.load(fd)
 
-    print(data)
-
     try:
         pull = repo.get_pull(data["number"])
     except KeyError:
-        pull = repo.get_pull(data["issue"]["number"])
+        try:
+            pull = repo.get_pull(data["issue"]["number"])
+        except KeyError:
+            pull = repo.get_pull(data["pull_request"]["number"])
 
     if action == "remove_verified_label":
         remove_verified_label(pull=pull)
@@ -44,5 +45,4 @@ if __name__ == "__main__":
         block_offensive_language(pull=pull)
 
     if action == "block_merge_no_approve":
-        print(data)
         block_merge_no_approve(pull=pull)
