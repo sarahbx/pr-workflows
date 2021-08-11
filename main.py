@@ -26,6 +26,7 @@ if __name__ == "__main__":
 
     if action == "remove_verified_label":
         remove_verified_label(pull=pull)
+        block_merge_no_verify(pull=pull)
 
     if action == "labels_by_user_input":
         labels_by_user_input(data=data, pull=pull)
@@ -39,6 +40,3 @@ if __name__ == "__main__":
 
     if action == "block_offensive_language":
         block_offensive_language(pull=pull)
-
-    if action == "block_merge_no_verify":
-        block_merge_no_verify(pull=pull)
