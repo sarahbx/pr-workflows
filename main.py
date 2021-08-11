@@ -4,10 +4,21 @@ import os
 import github
 
 from src.add_reviewers import add_reviewers
-from src.block_merge import block_merge_no_verify
+from src.block_merge import block_merge_no_approve, block_merge_no_verify
 from src.block_offensive_lanague import block_offensive_language
 from src.labels_by_user_input import labels_by_user_input, remove_verified_label
 from src.size_label_prs import size_label_prs
+
+
+def _get_pull_from_data(event_data):
+    pull_number = data.get("number")
+    if not pull_number:
+        pull_number = data.get("issue", {}).get("number")
+
+    if not pull_number:
+        pull_number = data.get("pull_request", {}).get("number")
+
+    return repo.get_pull(pull_number)
 
 
 if __name__ == "__main__":
@@ -19,10 +30,7 @@ if __name__ == "__main__":
     with open(os.environ["GITHUB_EVENT_PATH"], "r") as fd:
         data = json.load(fd)
 
-    try:
-        pull = repo.get_pull(data["number"])
-    except KeyError:
-        pull = repo.get_pull(data["issue"]["number"])
+    pull = _get_pull_from_data(event_data=data)
 
     if action == "remove_verified_label":
         remove_verified_label(pull=pull)
@@ -40,3 +48,6 @@ if __name__ == "__main__":
 
     if action == "block_offensive_language":
         block_offensive_language(pull=pull)
+
+    if action == "block_merge_no_approve":
+        block_merge_no_approve(pull=pull)
