@@ -3,7 +3,7 @@ on:
   pull_request_target:
   workflow_run:
     workflows:
-      - Dummy pull_request_review workflow
+      - dummy_pull_request_review_workflow
     types:
       - requested
 

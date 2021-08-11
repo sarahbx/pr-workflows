@@ -1,4 +1,4 @@
-name: Dummy pull_request_review workflow
+name: dummy_pull_request_review_workflow
 
 on: pull_request_review
 
