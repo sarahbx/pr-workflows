@@ -11,16 +11,18 @@ def block_merge_no_verify(pull):
 
 def block_merge_no_approve(pull):
     last_commit = list(pull.get_commits())[-1]
-    if list(pull.get_reviews())[-1].state == "APPROVED":
-        last_commit.create_status(
-            state="success",
-            description="Maintainers approved",
-            context=NEEDS_MAINTAINERS_APPROVE,
-        )
-
-    else:
+    reviews = list(pull.get_reviews())
+    if not reviews or reviews[-1].state != "APPROVED":
         last_commit.create_status(
             state="pending",
             description="Needs approve from maintainers",
             context=NEEDS_MAINTAINERS_APPROVE,
         )
+
+    else:
+        if reviews[-1].state == "APPROVED":
+            last_commit.create_status(
+                state="success",
+                description="Maintainers approved",
+                context=NEEDS_MAINTAINERS_APPROVE,
+            )
