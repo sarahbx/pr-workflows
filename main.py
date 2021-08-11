@@ -10,6 +10,17 @@ from src.labels_by_user_input import labels_by_user_input, remove_verified_label
 from src.size_label_prs import size_label_prs
 
 
+def _get_pull_from_data(data):
+    pull_number = (
+        data.get("number", data)
+        .get("issue", data)
+        .get("number", data)
+        .get("pull_request")
+        .get("number")
+    )
+    return repo.get_pull(pull_number)
+
+
 if __name__ == "__main__":
     token = os.environ["INPUT_TOKEN"]
     action = os.environ["INPUT_ACTION"]
@@ -19,13 +30,14 @@ if __name__ == "__main__":
     with open(os.environ["GITHUB_EVENT_PATH"], "r") as fd:
         data = json.load(fd)
 
-    try:
-        pull = repo.get_pull(data["number"])
-    except KeyError:
-        try:
-            pull = repo.get_pull(data["issue"]["number"])
-        except KeyError:
-            pull = repo.get_pull(data["pull_request"]["number"])
+    pull = _get_pull_from_data(data=data)
+    # try:
+    #     pull = repo.get_pull(data["number"])
+    # except KeyError:
+    #     try:
+    #         pull = repo.get_pull(data["issue"]["number"])
+    #     except KeyError:
+    #         pull = repo.get_pull(data["pull_request"]["number"])
 
     if action == "remove_verified_label":
         remove_verified_label(pull=pull)
