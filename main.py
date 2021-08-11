@@ -10,11 +10,11 @@ from src.labels_by_user_input import labels_by_user_input, remove_verified_label
 from src.size_label_prs import size_label_prs
 
 
-def _get_pull_from_data(data):
+def _get_pull_from_data(event_data):
     pull_number = (
-        data.get("number", data)
-        .get("issue", data)
-        .get("number", data)
+        event_data.get("number", event_data)
+        .get("issue", event_data)
+        .get("number", event_data)
         .get("pull_request")
         .get("number")
     )
@@ -30,7 +30,7 @@ if __name__ == "__main__":
     with open(os.environ["GITHUB_EVENT_PATH"], "r") as fd:
         data = json.load(fd)
 
-    pull = _get_pull_from_data(data=data)
+    pull = _get_pull_from_data(event_data=data)
     # try:
     #     pull = repo.get_pull(data["number"])
     # except KeyError:
