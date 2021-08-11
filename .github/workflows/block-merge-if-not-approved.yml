@@ -1,5 +1,5 @@
 name: Block merge if not approved
-on: pull_request_review
+on: [pull_request_review, pull_request_target]
 
 jobs:
   block_pr_if_not_approved:
