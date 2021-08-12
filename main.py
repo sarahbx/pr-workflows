@@ -16,6 +16,7 @@ from src.size_label_prs import size_label_prs
 
 def _get_pull_from_data(event_data):
     pull_number = event_data.get("number")
+    print(pull_number)
     if not pull_number:
         pull_number = event_data.get("issue", {}).get("number")
 
