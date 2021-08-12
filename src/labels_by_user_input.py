@@ -13,18 +13,22 @@ from src.utils import (
 def labels_by_user_input(data, pull):
     body = data["comment"]["body"]
     last_commit = list(pull.get_commits())[-1]
-    if f"/{LABEL_VERIFIED}" in body and LABEL_VERIFIED not in get_labels(pull=pull):
+    if f"/{LABEL_VERIFIED}".lower() in body and LABEL_VERIFIED not in get_labels(
+        pull=pull
+    ):
         add_label(pull=pull, label=LABEL_VERIFIED)
         set_commit_status_success_verify(commit=last_commit)
 
-    if f"/un{LABEL_VERIFIED}" in body:
+    if f"/un{LABEL_VERIFIED}".lower() in body:
         remove_label(pull=pull, label=LABEL_VERIFIED)
         set_commit_status_pending_no_verify(commit=last_commit)
 
-    if f"/{LABEL_APPROVE}" in body and LABEL_APPROVE not in get_labels(pull=pull):
+    if f"/{LABEL_APPROVE}".lower() in body and LABEL_APPROVE not in get_labels(
+        pull=pull
+    ):
         add_label(pull=pull, label=LABEL_APPROVE)
         set_commit_status_success_approve(commit=last_commit)
 
-    if f"/un{LABEL_APPROVE}" in body:
+    if f"/un{LABEL_APPROVE}".lower() in body:
         remove_label(pull=pull, label=LABEL_APPROVE)
         set_commit_status_pending_no_approve(commit=last_commit)

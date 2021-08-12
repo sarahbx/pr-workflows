@@ -16,7 +16,7 @@ def set_commit_status_success_verify(commit):
 def set_commit_status_pending_no_verify(commit):
     commit.create_status(
         state="pending",
-        description="Missing Verified label",
+        description="Missing Verified",
         context=BLOCK_MERGE_VERIFY_CONTEXT,
     )
 
