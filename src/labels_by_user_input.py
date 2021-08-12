@@ -1,29 +1,30 @@
-from src.constants import BLOCK_MERGE_VERIFY_CONTEXT
-from src.utils import get_labels, set_commit_status_pending_no_verify
-
-
-LABEL_VERIFIED = "Verified"
-
-
-def remove_verified_label(pull):
-    labels = get_labels(pull=pull)
-    if LABEL_VERIFIED in labels:
-        print(f"Remove {LABEL_VERIFIED} from {pull.title}")
-        pull.remove_from_labels(LABEL_VERIFIED)
+from src.constants import LABEL_APPROVE, LABEL_VERIFIED
+from src.utils import (
+    add_label,
+    get_labels,
+    remove_label,
+    set_commit_status_pending_no_approve,
+    set_commit_status_pending_no_verify,
+    set_commit_status_success_approve,
+    set_commit_status_success_verify,
+)
 
 
 def labels_by_user_input(data, pull):
     body = data["comment"]["body"]
     last_commit = list(pull.get_commits())[-1]
-    if "/verified" in body and LABEL_VERIFIED not in get_labels(pull=pull):
-        print(f"Adding {LABEL_VERIFIED} to {pull.title}")
-        pull.add_to_labels(LABEL_VERIFIED)
-        last_commit.create_status(
-            state="success",
-            description="Verified label exists",
-            context=BLOCK_MERGE_VERIFY_CONTEXT,
-        )
+    if f"/{LABEL_VERIFIED}" in body and LABEL_VERIFIED not in get_labels(pull=pull):
+        add_label(pull=pull, label=LABEL_VERIFIED)
+        set_commit_status_success_verify(commit=last_commit)
 
-    if "/unverified" in body:
-        remove_verified_label(pull=pull)
+    if f"/un{LABEL_VERIFIED}" in body:
+        remove_label(pull=pull, label=LABEL_VERIFIED)
         set_commit_status_pending_no_verify(commit=last_commit)
+
+    if f"/{LABEL_APPROVE}" in body and LABEL_APPROVE not in get_labels(pull=pull):
+        add_label(pull=pull, label=LABEL_APPROVE)
+        set_commit_status_success_approve(commit=last_commit)
+
+    if f"/un{LABEL_APPROVE}" in body:
+        remove_label(pull=pull, label=LABEL_APPROVE)
+        set_commit_status_pending_no_approve(commit=last_commit)

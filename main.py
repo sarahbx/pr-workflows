@@ -4,14 +4,15 @@ import os
 import github
 
 from src.add_reviewers import add_reviewers
-from src.block_merge import (
-    block_merge_no_approve,
-    block_merge_no_verify,
-    remove_approved_on_code_change,
-)
 from src.block_offensive_lanague import block_offensive_language
-from src.labels_by_user_input import labels_by_user_input, remove_verified_label
+from src.constants import LABEL_APPROVE, LABEL_VERIFIED
+from src.labels_by_user_input import labels_by_user_input
 from src.size_label_prs import size_label_prs
+from src.utils import (
+    remove_label,
+    set_commit_status_pending_no_approve,
+    set_commit_status_pending_no_verify,
+)
 
 
 def _get_pull_from_data(event_data):
@@ -39,9 +40,12 @@ if __name__ == "__main__":
 
     pull = _get_pull_from_data(event_data=data)
 
-    if action == "remove_verified_label":
-        remove_verified_label(pull=pull)
-        block_merge_no_verify(pull=pull)
+    if action == "remove_merge_checks":
+        last_commit = list(pull.get_commits())[-1]
+        remove_label(pull=pull, label=LABEL_VERIFIED)
+        remove_label(pull=pull, label=LABEL_APPROVE)
+        set_commit_status_pending_no_verify(commit=last_commit)
+        set_commit_status_pending_no_approve(commit=last_commit)
 
     if action == "labels_by_user_input":
         labels_by_user_input(data=data, pull=pull)
@@ -55,7 +59,3 @@ if __name__ == "__main__":
 
     if action == "block_offensive_language":
         block_offensive_language(pull=pull)
-
-    if action == "block_merge_no_approve":
-        remove_approved_on_code_change(pull=pull)
-        block_merge_no_approve(pull=pull)

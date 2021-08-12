@@ -8,11 +8,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Remove Verified Label
+      - name: Remove Merge Checks
         uses: ./
         with:
           token: ${{secrets.REPO_TOKEN}}
-          action: remove_verified_label
+          action: remove_merge_checks
 
       - name: Assign Size Labels
         uses: ./
