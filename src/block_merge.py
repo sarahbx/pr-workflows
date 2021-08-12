@@ -6,6 +6,7 @@ NEEDS_MAINTAINERS_APPROVE = "Needs Maintainers Approve"
 
 def _get_approved_commit(pull):
     reviews = list(pull.get_reviews())
+    print(reviews)
     approved = [review for review in reviews if review.state == "APPROVED"]
     return approved[0] if approved else None
 
@@ -18,7 +19,6 @@ def block_merge_no_verify(pull):
 def block_merge_no_approve(pull):
     last_commit = list(pull.get_commits())[-1]
     approved = _get_approved_commit(pull=pull)
-    print(approved)
     if approved:
         last_commit.create_status(
             state="success",
