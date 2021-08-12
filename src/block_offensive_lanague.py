@@ -14,7 +14,7 @@ def block_offensive_language(pull):
 
         with open(file_name, "r") as fd:
             for idx, line in enumerate(fd.readlines()):
-                match = re.search(offensive_words, line)
+                match = re.search(offensive_words, line, re.IGNORECASE)
                 if match:
                     print(
                         f"File: {file_name}:{idx + 1}:{match.span()[0]}\n    "
