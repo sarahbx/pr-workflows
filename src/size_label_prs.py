@@ -25,7 +25,7 @@ def size_label_prs(data, pull):
         label = "Size/XXL"
         comment = "Please try to break up this PR, it is very large."
 
-    if label in labels:
+    if label.lower() in labels:
         return
 
     else:
