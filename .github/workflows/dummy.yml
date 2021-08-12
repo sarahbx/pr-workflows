@@ -7,13 +7,5 @@ jobs:
     runs-on: ubuntu-latest
     name: dummy workflow
     steps:
-      - uses: jwalton/gh-find-current-pr@v1
-        id: findPr
-      # This will echo "Your PR is 7", or be skipped if there is no current PR.
-      - run: echo "Your PR is ${PR}"
-        if: success() && steps.findPr.outputs.number
-        env:
-          PR: ${{ steps.findPr.outputs.pr }}
-          TEST: "TEST ENV"
       - name: Explanation
         run: echo "this is a dummy workflow that triggers a workflow_run; it's necessary because otherwise the repo secrets will not be in scope for externally forked pull requests"
