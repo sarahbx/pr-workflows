@@ -16,7 +16,6 @@ from src.size_label_prs import size_label_prs
 
 def _get_pull_from_data(event_data):
     pull_number = event_data.get("number")
-    print(event_data)
     if not pull_number:
         pull_number = event_data.get("issue", {}).get("number")
 
@@ -33,7 +32,7 @@ if __name__ == "__main__":
     repo = github.get_repo(os.environ["GITHUB_REPOSITORY"])
     commit = repo.get_commit(os.environ["GITHUB_SHA"])
 
-    print(os.environ["GITHUB_REF"])
+    print(os.environ)
 
     with open(os.environ["GITHUB_EVENT_PATH"], "r") as fd:
         data = json.load(fd)
