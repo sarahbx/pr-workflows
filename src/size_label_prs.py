@@ -3,6 +3,7 @@ from src.utils import get_labels
 
 def size_label_prs(data, pull):
     labels = get_labels(pull=pull)
+    print(labels)
     additions = data["pull_request"]["additions"]
 
     comment = None
