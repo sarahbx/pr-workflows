@@ -15,12 +15,12 @@ from src.size_label_prs import size_label_prs
 
 
 def _get_pull_from_data(event_data):
-    pull_number = data.get("number")
+    pull_number = event_data.get("number")
     if not pull_number:
-        pull_number = data.get("issue", {}).get("number")
+        pull_number = event_data.get("issue", {}).get("number")
 
     if not pull_number:
-        pull_number = data.get("pull_request", {}).get("number")
+        pull_number = event_data.get("pull_request", {}).get("number")
 
     return repo.get_pull(pull_number)
 
