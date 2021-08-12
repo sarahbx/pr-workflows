@@ -3,7 +3,6 @@ from src.utils import get_labels
 
 def size_label_prs(data, pull):
     labels = get_labels(pull=pull)
-    print(labels)
     additions = data["pull_request"]["additions"]
 
     comment = None
@@ -26,7 +25,7 @@ def size_label_prs(data, pull):
         label = "Size/XXL"
         comment = "Please try to break up this PR, it is very large."
 
-    if label.lower() in labels:
+    if label.lower() in [lb.lower() for lb in labels]:
         return
 
     else:
