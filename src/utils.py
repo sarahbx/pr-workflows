@@ -8,11 +8,12 @@ def get_labels(pull):
 
 
 def set_commit_status_success_verify(commit):
-    commit.create_status(
-        state="success",
-        description="Verified label exists",
-        context=BLOCK_MERGE_VERIFY_CONTEXT,
-    )
+    if commit.commiter.login in get_repo_approvers():
+        commit.create_status(
+            state="success",
+            description="Verified label exists",
+            context=BLOCK_MERGE_VERIFY_CONTEXT,
+        )
 
 
 def set_commit_status_pending_no_verify(commit):
@@ -32,11 +33,12 @@ def set_commit_status_pending_no_approve(commit):
 
 
 def set_commit_status_success_approve(commit):
-    commit.create_status(
-        state="success",
-        description="Approved by maintainers",
-        context=NEEDS_MAINTAINERS_APPROVE,
-    )
+    if commit.commiter.login in get_repo_approvers():
+        commit.create_status(
+            state="success",
+            description="Approved by maintainers",
+            context=NEEDS_MAINTAINERS_APPROVE,
+        )
 
 
 def remove_label(pull, label):
