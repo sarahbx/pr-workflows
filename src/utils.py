@@ -1,3 +1,5 @@
+import yaml
+
 from src.constants import BLOCK_MERGE_VERIFY_CONTEXT, NEEDS_MAINTAINERS_APPROVE
 
 
@@ -47,3 +49,10 @@ def remove_label(pull, label):
 def add_label(pull, label):
     print(f"Adding {label} to {pull.title}")
     pull.add_to_labels(label)
+
+
+def get_repo_approvers():
+    with open("OWNERS", "r") as fd:
+        data = yaml.load(fd.read())
+
+    return data["approvers"]

@@ -9,6 +9,7 @@ from src.constants import LABEL_APPROVE, LABEL_VERIFIED
 from src.labels_by_user_input import labels_by_user_input
 from src.size_label_prs import size_label_prs
 from src.utils import (
+    get_repo_approvers,
     remove_label,
     set_commit_status_pending_no_approve,
     set_commit_status_pending_no_verify,
@@ -27,6 +28,7 @@ def _get_pull_from_data(event_data):
 
 
 if __name__ == "__main__":
+    print(get_repo_approvers())
     token = os.environ["INPUT_TOKEN"]
     action = os.environ["INPUT_ACTION"]
     github = github.Github(token)
