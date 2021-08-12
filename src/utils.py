@@ -56,6 +56,6 @@ def add_label(pull, label):
 
 def get_repo_approvers():
     with open("OWNERS", "r") as fd:
-        data = yaml.load(fd.read())
+        data = yaml.load(fd.read(), Loader=yaml.SafeLoader)
 
     return data["approvers"]
