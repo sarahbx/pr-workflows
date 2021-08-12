@@ -8,7 +8,7 @@ def get_labels(pull):
 
 
 def set_commit_status_success_verify(commit):
-    if commit.commiter.login in get_repo_approvers():
+    if commit.committer.login in get_repo_approvers():
         commit.create_status(
             state="success",
             description="Verified label exists",
@@ -33,7 +33,7 @@ def set_commit_status_pending_no_approve(commit):
 
 
 def set_commit_status_success_approve(commit):
-    if commit.commiter.login in get_repo_approvers():
+    if commit.committer.login in get_repo_approvers():
         commit.create_status(
             state="success",
             description="Approved by maintainers",
