@@ -46,6 +46,7 @@ if __name__ == "__main__":
         set_commit_status_pending_no_approve(commit=last_commit)
 
     if action == "labels_by_user_input":
+        print(data)
         labels_by_user_input(data=data, pull=pull)
 
     if action == "add_reviewers":
