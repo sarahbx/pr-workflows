@@ -11,7 +11,7 @@ def upload_to_pypi():
     os.environ["TWINE_PASSWORD"] = os.environ["INPUT_PYPI_TOKEN"]
     tag = os.environ["GITHUB_REF"].split("/")[-1]
     version = tag.strip("v")
-    print(os.listdir("."))
+    subprocess.check_output(shlex.split("python -m build --sdist --outdir dist/"))
     dist_pkg = [pkg for pkg in os.listdir("dist") if version in pkg]
     if not dist_pkg:
         print("No package to upload under dist/ folder")
