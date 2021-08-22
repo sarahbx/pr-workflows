@@ -61,5 +61,5 @@ if __name__ == "__main__":
     if action == "block_offensive_language":
         block_offensive_language(pull=pull)
 
-    if action == "upload to pypi":
+    if action == "upload_to_pypi":
         upload_to_pypi(data=data)
