@@ -21,7 +21,7 @@ def upload_to_pypi():
     )
     dist_pkg = [pkg for pkg in os.listdir(build_folder) if version in pkg]
     if not dist_pkg:
-        print("No package to upload under dist/ folder")
+        print(f"No package to upload under {build_folder}/ folder")
         sys.exit(1)
 
     dist_pkg = dist_pkg[0]
