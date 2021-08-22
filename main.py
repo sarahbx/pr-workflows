@@ -8,6 +8,7 @@ from src.block_offensive_lanague import block_offensive_language
 from src.constants import LABEL_APPROVE, LABEL_VERIFIED
 from src.labels_by_user_input import labels_by_user_input
 from src.size_label_prs import size_label_prs
+from src.upload_to_pypi import upload_to_pypi
 from src.utils import (
     remove_label,
     set_commit_status_pending_no_approve,
@@ -58,3 +59,6 @@ if __name__ == "__main__":
 
     if action == "block_offensive_language":
         block_offensive_language(pull=pull)
+
+    if action == "upload to pypi":
+        upload_to_pypi(data=data)
