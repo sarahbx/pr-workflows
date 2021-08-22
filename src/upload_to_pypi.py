@@ -1,6 +1,7 @@
 import os
+import subprocess
 
 
-def upload_to_pypi(data):
+def upload_to_pypi():
     os.environ["INPUT_PYPI_TOKEN"]
-    print(data)
+    subprocess.check_output(["cat", "setup.cfg"])

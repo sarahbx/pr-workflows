@@ -62,4 +62,4 @@ if __name__ == "__main__":
         block_offensive_language(pull=pull)
 
     if action == "upload_to_pypi":
-        upload_to_pypi(data=data)
+        upload_to_pypi()
