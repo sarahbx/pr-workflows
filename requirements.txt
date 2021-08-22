@@ -13,3 +13,4 @@ urllib3==1.26.6
 wrapt==1.12.1
 pyyaml==5.4.1
 twine==3.4.2
+pygit2==1.6.1
