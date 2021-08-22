@@ -24,7 +24,8 @@ def _get_pull_from_data(event_data):
     if not pull_number:
         pull_number = event_data.get("pull_request", {}).get("number")
 
-    return repo.get_pull(pull_number)
+    if pull_number:
+        return repo.get_pull(pull_number)
 
 
 if __name__ == "__main__":
@@ -37,8 +38,9 @@ if __name__ == "__main__":
     with open(os.environ["GITHUB_EVENT_PATH"], "r") as fd:
         data = json.load(fd)
 
+    pull = _get_pull_from_data(event_data=data)
+
     if action == "remove_merge_checks":
-        pull = _get_pull_from_data(event_data=data)
         last_commit = list(pull.get_commits())[-1]
         remove_label(pull=pull, label=LABEL_VERIFIED)
         remove_label(pull=pull, label=LABEL_APPROVE)
@@ -47,20 +49,16 @@ if __name__ == "__main__":
 
     if action == "labels_by_user_input":
         print(data)
-        pull = _get_pull_from_data(event_data=data)
         labels_by_user_input(data=data, pull=pull)
 
     if action == "add_reviewers":
         reviewers = os.environ["INPUT_REVIEWERS"]
-        pull = _get_pull_from_data(event_data=data)
         add_reviewers(data=data, pull=pull, reviewers=reviewers)
 
     if action == "size_label_prs":
-        pull = _get_pull_from_data(event_data=data)
         size_label_prs(data=data, pull=pull)
 
     if action == "block_offensive_language":
-        pull = _get_pull_from_data(event_data=data)
         block_offensive_language(pull=pull)
 
     if action == "upload to pypi":
