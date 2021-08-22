@@ -15,5 +15,5 @@ def upload_to_pypi():
 
     tag = os.environ["GITHUB_REF"].split("/")[-1]
     branch = f"branch-{tag}"
-    subprocess.check_output(shlex.split(f"git checkout {branch}"))
+    subprocess.check_output(shlex.split(f"git checkout origin/{branch}"))
     print(subprocess.check_output(shlex.split("cat setup.cfg")))
