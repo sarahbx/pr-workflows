@@ -6,6 +6,8 @@ import pygit2
 
 
 def upload_to_pypi():
+    print(subprocess.check_output(shlex.split("ls -la")))
+    print(subprocess.check_output(shlex.split("git branch")))
     tag = os.environ["GITHUB_REF"].split("/")[-1]
     repo = pygit2.Repository(".")
     repo.checkout(f"refs/remotes/origin/branch-{tag}")
