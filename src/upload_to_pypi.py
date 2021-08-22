@@ -12,19 +12,20 @@ def upload_to_pypi():
     tag = os.environ["GITHUB_REF"].split("/")[-1]
     build_folder = "dist"
     version = tag.strip("v")
+
+    repo = pygit2.Repository(".")
+    repo.checkout(f"refs/remotes/origin/branch-{tag}")
+
     subprocess.check_output(
         shlex.split(f"python -m build --sdist --outdir {build_folder}/")
     )
-    print(os.listdir(build_folder))
     dist_pkg = [pkg for pkg in os.listdir(build_folder) if version in pkg]
     if not dist_pkg:
         print("No package to upload under dist/ folder")
         sys.exit(1)
 
     dist_pkg = dist_pkg[0]
-    repo = pygit2.Repository(".")
-    repo.checkout(f"refs/remotes/origin/branch-{tag}")
-    subprocess.check_output(shlex.split(f"twine check dist/{dist_pkg}"))
+    subprocess.check_output(shlex.split(f"twine check {build_folder}/{dist_pkg}"))
     subprocess.check_output(
-        shlex.split(f"twine upload dist/{dist_pkg} --skip-existing")
+        shlex.split(f"twine upload {build_folder}/{dist_pkg} --skip-existing")
     )
