@@ -1,14 +1,10 @@
-# every action has a name
-name: Default actions
-# description
+name: PR workflow
 description: Runs main.py, runs only functions specified in 'action'
-# input parameters to be taken from user
 inputs:
-  token: # token variable available in workflow as env var named INPUT_TOKEN
+  token:
     required: true
     description: Token of the user that creates the issue
     default: ${{ github.token }}
-    # This way you can create different workflows and still use the same action
   action:
     required: true
     description: Desired action. i.e - add_reviewers, labels_by_user_inpurt, size_label_prs
@@ -19,12 +15,10 @@ inputs:
     required: false
     description: PyPI token.
 
-# definition how we want our action
 runs:
-  using: docker # we are saying this action will run on docker
-  image: 'Dockerfile' # we will use our own Dockerfile to build an image and run it.
+  using: docker
+  image: 'Dockerfile'
 
-# for publishing purposes
-#branding: #generates a logo for our action
-#  icon: arrow-down #icon of the image
-#  color: blue # background color of the logo of our action
+branding:
+  icon: arrow-down
+  color: blue
