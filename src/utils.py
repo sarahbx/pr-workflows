@@ -1,8 +1,17 @@
 import contextlib
 import os
+import re
 
 import yaml
 from github.GithubException import UnknownObjectException
+
+from src.constants import (
+    LABEL_KEY_MAJOR,
+    LABEL_KEY_MINOR,
+    LABEL_KEY_PATCH,
+    SEMVER,
+    SEMVER_LABELS_LIST,
+)
 
 
 def get_pull_from_data(event_data, repo):
@@ -69,3 +78,36 @@ def print_os_environment():
     """
     for key, val in os.environ.items():
         print(f"{key}: {val}")
+
+
+def get_semver_user_input(body):
+    match = re.match(
+        rf".*\B/(?P<{SEMVER}>{LABEL_KEY_MAJOR}|{LABEL_KEY_MINOR}|{LABEL_KEY_PATCH})\b",
+        body,
+        re.IGNORECASE,
+    )
+    if match:
+        return match.group(SEMVER).lower()
+
+
+def semver_labels_in_pull_labels(pull):
+    return [
+        label in SEMVER_LABELS_LIST
+        for label in get_labels(pull=pull)
+        if label in SEMVER_LABELS_LIST
+    ]
+
+
+def add_remove_labels(pull, labels_to_add, labels_to_remove):
+    new_labels_to_add = labels_to_add.copy()
+    labels_from_pull = get_labels(pull=pull)
+
+    for label in labels_from_pull:
+        if label in labels_to_remove:
+            remove_label(pull=pull, label=label)
+        elif label in new_labels_to_add:
+            print(f"Label {label} already exists in {pull.title}")
+            new_labels_to_add.remove(label)
+
+    for label in new_labels_to_add:
+        add_label(pull=pull, label=label)
