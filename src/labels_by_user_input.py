@@ -1,4 +1,5 @@
 from src.constants import (
+    BLOCK_MERGE_SEMVER_CONTEXT,
     BLOCK_MERGE_VERIFY_CONTEXT,
     LABEL_APPROVE,
     LABEL_VERIFIED,
@@ -9,7 +10,14 @@ from src.constants import (
     STATUS_DESCRIPTION_MISSING_MAINTAINERS_APPROVAL,
     STATUS_DESCRIPTION_MISSING_VERIFIED,
 )
-from src.utils import add_label, get_labels, get_repo_approvers, remove_label
+from src.utils import (
+    add_label,
+    add_remove_labels,
+    get_labels,
+    get_repo_approvers,
+    get_semver_label_data,
+    remove_label,
+)
 
 
 def labels_by_user_input(event_data, pull):
@@ -36,6 +44,26 @@ def labels_by_user_input(event_data, pull):
             context=BLOCK_MERGE_VERIFY_CONTEXT,
         )
 
+    (
+        semver_status_state,
+        semver_status_description,
+        semver_labels_to_add,
+        semver_labels_to_remove,
+    ) = get_semver_label_data(pull=pull, body=body)
+    semver_modified = semver_labels_to_add or semver_labels_to_remove
+    if semver_modified:
+        add_remove_labels(
+            pull=pull,
+            labels_to_add=semver_labels_to_add,
+            labels_to_remove=semver_labels_to_remove,
+        )
+
+    last_commit.create_status(
+        state=semver_status_state,
+        description=semver_status_description,
+        context=BLOCK_MERGE_SEMVER_CONTEXT,
+    )
+
     if commented_user in get_repo_approvers():
         if f"/{LABEL_APPROVE}".lower() in body and LABEL_APPROVE not in get_labels(
             pull=pull
@@ -47,7 +75,7 @@ def labels_by_user_input(event_data, pull):
                 context=NEEDS_MAINTAINERS_APPROVE,
             )
 
-        if f"/un{LABEL_APPROVE}".lower() in body:
+        if f"/un{LABEL_APPROVE}".lower() in body or semver_modified:
             remove_label(pull=pull, label=LABEL_APPROVE)
             remove_label(pull=pull, label=READY_FOR_MERGE)
 
