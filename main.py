@@ -49,7 +49,8 @@ if __name__ == "__main__":
 
     if action == "labels_by_user_input":
         print(data)
-        labels_by_user_input(data=data, pull=pull)
+        commented_user = data["comment"]["user"]["login"]
+        labels_by_user_input(data=data, pull=pull, commented_user=commented_user)
 
     if action == "add_reviewers":
         reviewers = os.environ["INPUT_REVIEWERS"]
