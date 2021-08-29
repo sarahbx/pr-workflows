@@ -1,0 +1,12 @@
+name: Label By comment
+on: status
+
+jobs:
+  add_comment_labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge status label
+        uses: ./
+        with:
+          token: ${{secrets.REPO_TOKEN}}
+          action: merge_status_label

@@ -7,6 +7,7 @@ from src.add_reviewers import add_reviewers
 from src.block_offensive_lanague import block_offensive_language
 from src.constants import LABEL_APPROVE, LABEL_VERIFIED
 from src.labels_by_user_input import labels_by_user_input
+from src.merge_status_label import merge_status_label
 from src.size_label_prs import size_label_prs
 from src.upload_to_pypi import upload_to_pypi
 from src.utils import (
@@ -64,3 +65,6 @@ if __name__ == "__main__":
 
     if action == "upload_to_pypi":
         upload_to_pypi()
+
+    if action == "merge_status_label":
+        merge_status_label(pull=pull)
