@@ -1,9 +1,9 @@
 from src.utils import get_labels
 
 
-def size_label_prs(data, pull):
+def size_label_prs(pull):
     labels = get_labels(pull=pull)
-    additions = data["pull_request"]["additions"]
+    additions = pull.additions
 
     comment = None
     if additions < 20:

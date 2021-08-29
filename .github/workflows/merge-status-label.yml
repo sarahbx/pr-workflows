@@ -2,7 +2,7 @@ name: Merge status label
 on: status
 
 jobs:
-  add_comment_labels:
+  merge_status_label:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

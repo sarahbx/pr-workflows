@@ -54,10 +54,10 @@ if __name__ == "__main__":
 
     if action == "add_reviewers":
         reviewers = os.environ["INPUT_REVIEWERS"]
-        add_reviewers(data=data, pull=pull, reviewers=reviewers)
+        add_reviewers(pull=pull, reviewers=reviewers)
 
     if action == "size_label_prs":
-        size_label_prs(data=data, pull=pull)
+        size_label_prs(pull=pull)
 
     if action == "block_offensive_language":
         block_offensive_language(pull=pull)
@@ -66,8 +66,4 @@ if __name__ == "__main__":
         upload_to_pypi()
 
     if action == "merge_status_label":
-        print(data)
-        for k, v in os.environ.items():
-            print(f"{k}: {v}\n")
-
-        merge_status_label(pull=pull)
+        merge_status_label(data=data, repo=repo)

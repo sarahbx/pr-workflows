@@ -1,7 +1,7 @@
 import github
 
 
-def add_reviewers(data, pull, reviewers):
+def add_reviewers(pull, reviewers):
     reviewers = [reviewer.strip() for reviewer in reviewers.split(",")]
     for reviewer in reviewers:
         try:
