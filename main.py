@@ -49,7 +49,6 @@ if __name__ == "__main__":
         set_commit_status_pending_no_approve(commit=last_commit)
 
     if action == "labels_by_user_input":
-        print(data)
         commented_user = data["comment"]["user"]["login"]
         labels_by_user_input(data=data, pull=pull, commented_user=commented_user)
 
@@ -67,4 +66,8 @@ if __name__ == "__main__":
         upload_to_pypi()
 
     if action == "merge_status_label":
+        print(data)
+        for k, v in os.environ.items():
+            print(f"{k}: {v}\n")
+
         merge_status_label(pull=pull)
