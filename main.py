@@ -18,7 +18,6 @@ if __name__ == "__main__":
     action = os.environ["INPUT_ACTION"]
     github = github.Github(token)
     repo = github.get_repo(os.environ["GITHUB_REPOSITORY"])
-    commit = repo.get_commit(os.environ["GITHUB_SHA"])
 
     with open(os.environ["GITHUB_EVENT_PATH"], "r") as fd:
         data = json.load(fd)
