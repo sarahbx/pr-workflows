@@ -19,6 +19,7 @@ def get_pull_from_data(event_data, repo):
 
 
 def get_commit_from_data(event_data, repo):
+    print(event_data)
     commit_sha = event_data.get("commit", {}).get("sha")
     if commit_sha:
         print(f"Current commit sha is: {commit_sha}")
