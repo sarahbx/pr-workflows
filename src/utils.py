@@ -17,17 +17,19 @@ def get_pull_from_data(event_data, repo):
         return repo.get_pull(pull_number)
 
     else:
-        return get_commit_from_data(event_data=event_data, repo=repo)
+        return get_pull_from_commit(event_data=event_data, repo=repo)
 
 
-def get_commit_from_data(event_data, repo):
+def get_pull_from_commit(event_data, repo):
     print_os_environment()
     print(event_data)
     commit_sha = event_data.get("commit", {}).get("sha")
     if commit_sha:
         print(f"Current commit sha is: {commit_sha}")
-        _commit = repo.get_commit(event_data.get("commit", {}).get("sha"))
-        return list(_commit.get_pulls())[0]
+        for pull in repo.get_pulls():
+            for commit in pull.get_commits():
+                if commit.sha == commit_sha:
+                    return pull
 
     print(f"commit sha not found in {event_data}")
 
