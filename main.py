@@ -5,16 +5,11 @@ import github
 
 from src.add_reviewers import add_reviewers
 from src.block_offensive_lanague import block_offensive_language
-from src.constants import LABEL_APPROVE, LABEL_VERIFIED
 from src.labels_by_user_input import labels_by_user_input
 from src.merge_status_label import merge_status_label
+from src.remove_merge_checks import remove_merge_checks
 from src.size_label_prs import size_label_prs
 from src.upload_to_pypi import upload_to_pypi
-from src.utils import (
-    remove_label,
-    set_commit_status_pending_no_approve,
-    set_commit_status_pending_no_verify,
-)
 
 
 def _get_pull_from_data(event_data):
@@ -42,15 +37,10 @@ if __name__ == "__main__":
     pull = _get_pull_from_data(event_data=data)
 
     if action == "remove_merge_checks":
-        last_commit = list(pull.get_commits())[-1]
-        remove_label(pull=pull, label=LABEL_VERIFIED)
-        remove_label(pull=pull, label=LABEL_APPROVE)
-        set_commit_status_pending_no_verify(commit=last_commit)
-        set_commit_status_pending_no_approve(commit=last_commit)
+        remove_merge_checks(pull=pull)
 
     if action == "labels_by_user_input":
-        commented_user = data["comment"]["user"]["login"]
-        labels_by_user_input(data=data, pull=pull, commented_user=commented_user)
+        labels_by_user_input(data=data, pull=pull)
 
     if action == "add_reviewers":
         reviewers = os.environ["INPUT_REVIEWERS"]

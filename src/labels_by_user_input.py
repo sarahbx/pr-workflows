@@ -11,7 +11,8 @@ from src.utils import (
 )
 
 
-def labels_by_user_input(data, pull, commented_user):
+def labels_by_user_input(data, pull):
+    commented_user = data["comment"]["user"]["login"]
     body = data["comment"]["body"]
     last_commit = list(pull.get_commits())[-1]
     if f"/{LABEL_VERIFIED}".lower() in body and LABEL_VERIFIED not in get_labels(
