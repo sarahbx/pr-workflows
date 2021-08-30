@@ -3,6 +3,26 @@ import yaml
 from src.constants import BLOCK_MERGE_VERIFY_CONTEXT, NEEDS_MAINTAINERS_APPROVE
 
 
+def get_pull_from_data(event_data, repo):
+    pull_number = event_data.get("number")
+    if not pull_number:
+        pull_number = event_data.get("issue", {}).get("number")
+
+    if not pull_number:
+        pull_number = event_data.get("pull_request", {}).get("number")
+
+    if pull_number:
+        return repo.get_pull(pull_number)
+
+    else:
+        return get_commit_from_data(event_data=event_data, repo=repo)
+
+
+def get_commit_from_data(event_data, repo):
+    _commit = repo.get_commit(event_data.get("commit", {}).get("sha"))
+    return list(_commit.get_pulls())[0]
+
+
 def get_labels(pull):
     return [label.name for label in pull.get_labels()]
 

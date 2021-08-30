@@ -10,18 +10,7 @@ from src.merge_status_label import merge_status_label
 from src.remove_merge_checks import remove_merge_checks
 from src.size_label_prs import size_label_prs
 from src.upload_to_pypi import upload_to_pypi
-
-
-def _get_pull_from_data(event_data):
-    pull_number = event_data.get("number")
-    if not pull_number:
-        pull_number = event_data.get("issue", {}).get("number")
-
-    if not pull_number:
-        pull_number = event_data.get("pull_request", {}).get("number")
-
-    if pull_number:
-        return repo.get_pull(pull_number)
+from src.utils import get_commit_from_data, get_pull_from_data
 
 
 if __name__ == "__main__":
@@ -34,7 +23,7 @@ if __name__ == "__main__":
     with open(os.environ["GITHUB_EVENT_PATH"], "r") as fd:
         data = json.load(fd)
 
-    pull = _get_pull_from_data(event_data=data)
+    pull = get_pull_from_data(event_data=data, repo=repo)
 
     if action == "remove_merge_checks":
         remove_merge_checks(pull=pull)
@@ -56,4 +45,5 @@ if __name__ == "__main__":
         upload_to_pypi()
 
     if action == "merge_status_label":
-        merge_status_label(data=data, repo=repo)
+        commit = get_commit_from_data(event_data=data, repo=repo)
+        merge_status_label(pull=pull, commit=commit)
