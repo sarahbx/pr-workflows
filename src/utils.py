@@ -1,3 +1,5 @@
+import os
+
 import yaml
 
 from src.constants import BLOCK_MERGE_VERIFY_CONTEXT, NEEDS_MAINTAINERS_APPROVE
@@ -19,6 +21,7 @@ def get_pull_from_data(event_data, repo):
 
 
 def get_commit_from_data(event_data, repo):
+    print_os_environment()
     print(event_data)
     commit_sha = event_data.get("commit", {}).get("sha")
     if commit_sha:
@@ -82,3 +85,11 @@ def get_repo_approvers():
         data = yaml.load(fd.read(), Loader=yaml.SafeLoader)
 
     return data["approvers"]
+
+
+def print_os_environment():
+    """
+    Utility function for debugging.
+    """
+    for key, val in os.environ.items():
+        print(f"{key}: {val}")
