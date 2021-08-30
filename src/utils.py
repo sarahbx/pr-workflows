@@ -19,8 +19,12 @@ def get_pull_from_data(event_data, repo):
 
 
 def get_commit_from_data(event_data, repo):
-    _commit = repo.get_commit(event_data.get("commit", {}).get("sha"))
-    return list(_commit.get_pulls())[0]
+    commit_sha = event_data.get("commit", {}).get("sha")
+    if commit_sha:
+        _commit = repo.get_commit(event_data.get("commit", {}).get("sha"))
+        return list(_commit.get_pulls())[0]
+
+    print(f"commit sha not found in {event_data}")
 
 
 def get_labels(pull):

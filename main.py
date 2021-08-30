@@ -28,7 +28,7 @@ if __name__ == "__main__":
         remove_merge_checks(pull=pull)
 
     if action == "labels_by_user_input":
-        labels_by_user_input(data=data, pull=pull)
+        labels_by_user_input(event_data=data, pull=pull)
 
     if action == "add_reviewers":
         reviewers = os.environ["INPUT_REVIEWERS"]
