@@ -49,4 +49,6 @@ if __name__ == "__main__":
         merge_status_label(pull=_pull, commit=_commit)
 
     if action == "issue_from_pr":
+        print(data)
         issue_from_pr(repo=repo, pull=pull)
+        # close_issue(repo=repo, pull=pull)
