@@ -5,6 +5,7 @@ import github
 
 from src.add_reviewers import add_reviewers
 from src.block_offensive_lanague import block_offensive_language
+from src.issue_from_pr import issue_from_pr
 from src.labels_by_user_input import labels_by_user_input
 from src.merge_status_label import merge_status_label
 from src.remove_merge_checks import remove_merge_checks
@@ -46,3 +47,6 @@ if __name__ == "__main__":
     if action == "merge_status_label":
         _pull, _commit = get_pull_and_commit_by_commit_sha(event_data=data, repo=repo)
         merge_status_label(pull=_pull, commit=_commit)
+
+    if action == "issue_from_pr":
+        issue_from_pr(repo=repo, pull=pull)
