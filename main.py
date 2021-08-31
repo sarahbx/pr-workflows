@@ -5,17 +5,13 @@ import github
 
 from src.add_reviewers import add_reviewers
 from src.block_offensive_lanague import block_offensive_language
-from src.issue_from_pr import issue_from_pr
+from src.issue_from_pr import close_issue, issue_from_pr
 from src.labels_by_user_input import labels_by_user_input
 from src.merge_status_label import merge_status_label
 from src.remove_merge_checks import remove_merge_checks
 from src.size_label_prs import size_label_prs
 from src.upload_to_pypi import upload_to_pypi
-from src.utils import (
-    get_pull_and_commit_by_commit_sha,
-    get_pull_from_data,
-    print_os_environment,
-)
+from src.utils import get_pull_and_commit_by_commit_sha, get_pull_from_data
 
 
 if __name__ == "__main__":
@@ -53,7 +49,5 @@ if __name__ == "__main__":
         merge_status_label(pull=_pull, commit=_commit)
 
     if action == "issue_from_pr":
-        print(data)
-        print_os_environment()
         issue_from_pr(repo=repo, pull=pull)
-        # close_issue(repo=repo, pull=pull)
+        close_issue(repo=repo, pull=pull)
