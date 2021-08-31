@@ -1,5 +1,5 @@
 def issue_from_pr(repo, pull):
-    issue_title = pull.title
+    issue_title = f"[ISSUE] {pull.title}"
 
     def _issue_exists():
         for _issue in repo.get_issues():
