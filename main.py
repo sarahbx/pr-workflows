@@ -11,7 +11,11 @@ from src.merge_status_label import merge_status_label
 from src.remove_merge_checks import remove_merge_checks
 from src.size_label_prs import size_label_prs
 from src.upload_to_pypi import upload_to_pypi
-from src.utils import get_pull_and_commit_by_commit_sha, get_pull_from_data
+from src.utils import (
+    get_pull_and_commit_by_commit_sha,
+    get_pull_from_data,
+    print_os_environment,
+)
 
 
 if __name__ == "__main__":
@@ -50,5 +54,6 @@ if __name__ == "__main__":
 
     if action == "issue_from_pr":
         print(data)
+        print_os_environment()
         issue_from_pr(repo=repo, pull=pull)
         # close_issue(repo=repo, pull=pull)
