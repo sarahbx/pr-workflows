@@ -10,5 +10,5 @@ jobs:
       - name: Issue from PR
         uses: myakove/pr-workflows@master
         with:
-          token: ${{secrets.CNV_QE_BOT_TOKEN}}
+          token: ${{secrets.REPO_TOKEN}}
           action: issue_from_pr
