@@ -25,12 +25,11 @@ def issue_from_pr(repo, pull):
 
 def close_issue(repo, pull):
     issue = _get_issue(repo=repo, pull=pull, issue_title=_get_issue_title(pull=pull))
-    if issue:
-        if pull.state != "open":
-            print(
-                f"Pull {pull.title} is {pull.state}. not closing issue {_get_issue_info(issue=issue)}"
-            )
-            return
-
+    if issue and pull.state != "open":
         print(f"Closing issue {issue.title} #{issue.number}")
         issue.edit(state="closed")
+        return
+
+    print(
+        f"Pull {pull.title} is {pull.state}. not closing issue {_get_issue_info(issue=issue)}"
+    )
