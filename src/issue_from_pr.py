@@ -3,7 +3,7 @@ def issue_from_pr(repo, pull):
 
     def _issue_exists():
         for _issue in repo.get_issues():
-            if _issue.title == issue_title:
+            if _issue.title == issue_title and _issue.state == "open":
                 print(f"Issue already exists for PR {issue_title} #{pull.number}")
                 return True
 
