@@ -5,8 +5,7 @@ def issue_from_pr(repo, pull):
         for _issue in repo.get_issues():
             if _issue.title == issue_title:
                 print(f"Issue already exists for PR {issue_title} #{pull.number}")
-                return False
-        return True
+                return True
 
     if not _issue_exists():
         print(f"Create issue for PR: {issue_title} #{pull.number}")
