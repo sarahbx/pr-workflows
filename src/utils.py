@@ -24,7 +24,7 @@ def get_pull_from_data(event_data, repo):
 def get_pull_and_commit_by_commit_sha(event_data, repo):
     commit_sha = event_data.get("commit", {}).get("sha")
     if not commit_sha:
-        commit_sha = event_data.get["commits"][-1]["id"]
+        commit_sha = event_data["commits"][-1]["id"]
 
     if commit_sha:
         print(f"Current commit sha is: {commit_sha}")
