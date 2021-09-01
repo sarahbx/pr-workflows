@@ -35,6 +35,7 @@ def get_pull_and_commit_by_commit_sha(event_data, repo):
                     return pull, commit
 
     print(f"commit sha not found in {event_data}")
+    return None, None
 
 
 def get_labels(pull):
