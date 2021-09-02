@@ -4,8 +4,6 @@ import os
 import yaml
 from github.GithubException import UnknownObjectException
 
-from src.constants import BLOCK_MERGE_VERIFY_CONTEXT, NEEDS_MAINTAINERS_APPROVE
-
 
 def get_pull_from_data(event_data, repo):
     pull_number = event_data.get("number")
@@ -46,35 +44,11 @@ def get_labels(pull):
     return [label.name for label in pull.get_labels()]
 
 
-def set_commit_status_success_verify(commit):
+def set_commit_status(commit, state, description, context):
     commit.create_status(
-        state="success",
-        description="Verified label exists",
-        context=BLOCK_MERGE_VERIFY_CONTEXT,
-    )
-
-
-def set_commit_status_pending_no_verify(commit):
-    commit.create_status(
-        state="pending",
-        description="Missing Verified",
-        context=BLOCK_MERGE_VERIFY_CONTEXT,
-    )
-
-
-def set_commit_status_pending_no_approve(commit):
-    commit.create_status(
-        state="pending",
-        description="Needs approve from maintainers",
-        context=NEEDS_MAINTAINERS_APPROVE,
-    )
-
-
-def set_commit_status_success_approve(commit):
-    commit.create_status(
-        state="success",
-        description="Approved by maintainers",
-        context=NEEDS_MAINTAINERS_APPROVE,
+        state=state,
+        description=description,
+        context=context,
     )
 
 
