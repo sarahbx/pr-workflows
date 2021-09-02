@@ -14,7 +14,7 @@ def get_pull_from_data(event_data, repo):
         pull_number = event_data.get("pull_request", {}).get("number")
 
     if pull_number:
-        return repo.get_pull(pull_number)
+        return repo.get_pull(number=pull_number)
 
     else:
         _pull, _ = get_pull_and_commit_by_commit_sha(event_data=event_data, repo=repo)
@@ -78,7 +78,7 @@ def remove_label(pull, label):
     labels = get_labels(pull=pull)
     if label in labels:
         print(f"Remove {label} from {pull.title}")
-        pull.remove_from_labels(label)
+        pull.remove_from_labels(label=label)
 
 
 def add_label(pull, label):
@@ -88,7 +88,7 @@ def add_label(pull, label):
 
 def get_repo_approvers():
     with open("OWNERS", "r") as fd:
-        data = yaml.load(fd.read(), Loader=yaml.SafeLoader)
+        data = yaml.load(stream=fd.read(), Loader=yaml.SafeLoader)
 
     return data["approvers"]
 

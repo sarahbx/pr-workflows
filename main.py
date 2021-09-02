@@ -17,8 +17,8 @@ from src.utils import get_pull_and_commit_by_commit_sha, get_pull_from_data
 if __name__ == "__main__":
     token = os.environ["INPUT_TOKEN"]
     action = os.environ["INPUT_ACTION"]
-    github = github.Github(token)
-    repo = github.get_repo(os.environ["GITHUB_REPOSITORY"])
+    github = github.Github(login_or_token=token)
+    repo = github.get_repo(full_name_or_id=os.environ["GITHUB_REPOSITORY"])
 
     with open(os.environ["GITHUB_EVENT_PATH"], "r") as fd:
         data = json.load(fd)

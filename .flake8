@@ -8,3 +8,13 @@ exclude =
     Pipfile.*,
     docs/*,
     .cache/*
+
+fcfn_exclude_functions =
+    json,
+    subprocess,
+    add_to_assignees,
+    re,
+    add_to_labels,
+
+enable-extensions =
+    FCFN,

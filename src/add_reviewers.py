@@ -6,7 +6,7 @@ def add_reviewers(pull, reviewers):
     for reviewer in reviewers:
         try:
             print(f"Requesting review from {reviewer} for {pull.title}")
-            pull.create_review_request([reviewer])
+            pull.create_review_request(reviewers=[reviewer])
         except github.GithubException as exp:
             # author ot the user who pushed cannot be add as reviewers
             print(f"Failed to add {reviewer}: {exp}")

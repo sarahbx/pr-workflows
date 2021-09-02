@@ -13,8 +13,8 @@ def upload_to_pypi():
     build_folder = "dist"
     version = tag.strip("v")
 
-    repo = pygit2.Repository(".")
-    repo.checkout(f"refs/remotes/origin/branch-{tag}")
+    repo = pygit2.Repository(path=".")
+    repo.checkout(refname=f"refs/remotes/origin/branch-{tag}")
 
     subprocess.check_output(
         shlex.split(f"python -m build --sdist --outdir {build_folder}/")

@@ -18,9 +18,9 @@ def issue_from_pr(repo, pull):
     issue_title = _get_issue_title(pull=pull)
     if not _get_issue(repo=repo, pull=pull, issue_title=issue_title):
         print(f"Create issue for PR: {issue_title} #{pull.number}")
-        issue = repo.create_issue(issue_title)
+        issue = repo.create_issue(title=issue_title)
         issue.add_to_assignees(issue.user)
-        issue.create_comment(f"Address #{pull.number}")
+        issue.create_comment(body=f"Address #{pull.number}")
 
 
 def close_issue(repo, pull):
