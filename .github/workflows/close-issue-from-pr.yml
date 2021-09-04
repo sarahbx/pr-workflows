@@ -10,7 +10,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Close Issue from PR
-        uses: myakove/pr-workflows@master
+        uses: ./
         with:
           token: ${{secrets.REPO_TOKEN}}
           action: close_issue_from_pr

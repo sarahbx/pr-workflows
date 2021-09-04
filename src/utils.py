@@ -1,6 +1,8 @@
+import contextlib
 import os
 
 import yaml
+from github.GithubException import UnknownObjectException
 
 from src.constants import BLOCK_MERGE_VERIFY_CONTEXT, NEEDS_MAINTAINERS_APPROVE
 
@@ -14,7 +16,9 @@ def get_pull_from_data(event_data, repo):
         pull_number = event_data.get("pull_request", {}).get("number")
 
     if pull_number:
-        return repo.get_pull(number=pull_number)
+        print(f"pull number is {pull_number}")
+        with contextlib.suppress(UnknownObjectException):
+            return repo.get_pull(number=pull_number)
 
     else:
         _pull, _ = get_pull_and_commit_by_commit_sha(event_data=event_data, repo=repo)

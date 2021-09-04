@@ -15,6 +15,7 @@ fcfn_exclude_functions =
     add_to_assignees,
     re,
     add_to_labels,
+    contextlib,
 
 enable-extensions =
     FCFN,
