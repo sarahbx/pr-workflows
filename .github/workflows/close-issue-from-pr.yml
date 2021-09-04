@@ -4,7 +4,7 @@ on:
     types: [closed]
 
 jobs:
-  issue_from_pr:
+  close_issue_from_pr:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
