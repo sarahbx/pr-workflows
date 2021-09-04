@@ -28,7 +28,7 @@ if __name__ == "__main__":
     if action == "remove_merge_checks":
         remove_merge_checks(pull=pull)
 
-    if action == "labels_by_user_input":
+    if action == "labels_by_user_input" and pull:
         labels_by_user_input(event_data=data, pull=pull)
 
     if action == "add_reviewers":
