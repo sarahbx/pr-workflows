@@ -5,7 +5,7 @@ import github
 
 from src.add_reviewers import add_reviewers
 from src.block_offensive_lanague import block_offensive_language
-from src.issue_from_pr import close_issue, issue_from_pr
+from src.issue_from_pr import close_issue_from_pr, issue_from_pr
 from src.labels_by_user_input import labels_by_user_input
 from src.merge_status_label import merge_status_label
 from src.remove_merge_checks import remove_merge_checks
@@ -50,4 +50,6 @@ if __name__ == "__main__":
 
     if action == "issue_from_pr":
         issue_from_pr(repo=repo, pull=pull)
-        close_issue(repo=repo, pull=pull)
+
+    if action == "close_issue_from_pr":
+        close_issue_from_pr(repo=repo, pull=pull)
