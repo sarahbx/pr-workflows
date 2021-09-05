@@ -28,6 +28,8 @@ def labels_by_user_input(event_data, pull):
 
     if f"/un{LABEL_VERIFIED}".lower() in body:
         remove_label(pull=pull, label=LABEL_VERIFIED)
+        remove_label(pull=pull, label=READY_FOR_MERGE)
+
         last_commit.create_status(
             state=STATE_PENDING,
             description=STATUS_DESCRIPTION_MISSING_VERIFIED,
@@ -47,9 +49,10 @@ def labels_by_user_input(event_data, pull):
 
         if f"/un{LABEL_APPROVE}".lower() in body:
             remove_label(pull=pull, label=LABEL_APPROVE)
+            remove_label(pull=pull, label=READY_FOR_MERGE)
+
             last_commit.create_status(
                 state=STATE_PENDING,
                 description=STATUS_DESCRIPTION_MISSING_MAINTAINERS_APPROVAL,
                 context=NEEDS_MAINTAINERS_APPROVE,
             )
-            remove_label(pull=pull, label=READY_FOR_MERGE)
