@@ -3,6 +3,7 @@ from src.constants import (
     LABEL_APPROVE,
     LABEL_VERIFIED,
     NEEDS_MAINTAINERS_APPROVE,
+    READY_FOR_MERGE,
     STATE_PENDING,
     STATE_SUCCESS,
     STATUS_DESCRIPTION_MISSING_MAINTAINERS_APPROVAL,
@@ -51,3 +52,4 @@ def labels_by_user_input(event_data, pull):
                 description=STATUS_DESCRIPTION_MISSING_MAINTAINERS_APPROVAL,
                 context=NEEDS_MAINTAINERS_APPROVE,
             )
+            remove_label(pull=pull, label=READY_FOR_MERGE)
