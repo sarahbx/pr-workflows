@@ -5,14 +5,10 @@ from src.constants import (
     NEEDS_MAINTAINERS_APPROVE,
     STATE_PENDING,
     STATE_SUCCESS,
+    STATUS_DESCRIPTION_MISSING_MAINTAINERS_APPROVAL,
+    STATUS_DESCRIPTION_MISSING_VERIFIED,
 )
-from src.utils import (
-    add_label,
-    get_labels,
-    get_repo_approvers,
-    remove_label,
-    set_commit_status,
-)
+from src.utils import add_label, get_labels, get_repo_approvers, remove_label
 
 
 def labels_by_user_input(event_data, pull):
@@ -23,8 +19,7 @@ def labels_by_user_input(event_data, pull):
         pull=pull
     ):
         add_label(pull=pull, label=LABEL_VERIFIED)
-        set_commit_status(
-            commit=last_commit,
+        last_commit.create_status(
             state=STATE_SUCCESS,
             description="Verified label exists",
             context=BLOCK_MERGE_VERIFY_CONTEXT,
@@ -32,10 +27,9 @@ def labels_by_user_input(event_data, pull):
 
     if f"/un{LABEL_VERIFIED}".lower() in body:
         remove_label(pull=pull, label=LABEL_VERIFIED)
-        set_commit_status(
-            commit=last_commit,
+        last_commit.create_status(
             state=STATE_PENDING,
-            description="Missing Verified",
+            description=STATUS_DESCRIPTION_MISSING_VERIFIED,
             context=BLOCK_MERGE_VERIFY_CONTEXT,
         )
 
@@ -44,8 +38,7 @@ def labels_by_user_input(event_data, pull):
             pull=pull
         ):
             add_label(pull=pull, label=LABEL_APPROVE)
-            set_commit_status(
-                commit=last_commit,
+            last_commit.create_status(
                 state=STATE_SUCCESS,
                 description="Approved by maintainers",
                 context=NEEDS_MAINTAINERS_APPROVE,
@@ -53,9 +46,8 @@ def labels_by_user_input(event_data, pull):
 
         if f"/un{LABEL_APPROVE}".lower() in body:
             remove_label(pull=pull, label=LABEL_APPROVE)
-            set_commit_status(
-                commit=last_commit,
+            last_commit.create_status(
                 state=STATE_PENDING,
-                description="Needs approve from maintainers",
+                description=STATUS_DESCRIPTION_MISSING_MAINTAINERS_APPROVAL,
                 context=NEEDS_MAINTAINERS_APPROVE,
             )

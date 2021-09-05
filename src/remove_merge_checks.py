@@ -2,11 +2,13 @@ from src.constants import (
     BLOCK_MERGE_VERIFY_CONTEXT,
     LABEL_APPROVE,
     LABEL_VERIFIED,
-    READY_FOR_MERGE,
     NEEDS_MAINTAINERS_APPROVE,
+    READY_FOR_MERGE,
     STATE_PENDING,
+    STATUS_DESCRIPTION_MISSING_MAINTAINERS_APPROVAL,
+    STATUS_DESCRIPTION_MISSING_VERIFIED,
 )
-from src.utils import remove_label, set_commit_status
+from src.utils import remove_label
 
 
 def remove_merge_checks(pull):
@@ -14,16 +16,13 @@ def remove_merge_checks(pull):
     remove_label(pull=pull, label=LABEL_VERIFIED)
     remove_label(pull=pull, label=LABEL_APPROVE)
     remove_label(pull=pull, label=READY_FOR_MERGE)
-    remove_label(pull=pull, label=READY_FOR_MERGE)
-    set_commit_status(
-        commit=last_commit,
+    last_commit.create_status(
         state=STATE_PENDING,
-        description="Missing Verified",
+        description=STATUS_DESCRIPTION_MISSING_VERIFIED,
         context=BLOCK_MERGE_VERIFY_CONTEXT,
     )
-    set_commit_status(
-        commit=last_commit,
+    last_commit.create_status(
         state=STATE_PENDING,
-        description="Needs approve from maintainers",
+        description=STATUS_DESCRIPTION_MISSING_MAINTAINERS_APPROVAL,
         context=NEEDS_MAINTAINERS_APPROVE,
     )

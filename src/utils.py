@@ -44,14 +44,6 @@ def get_labels(pull):
     return [label.name for label in pull.get_labels()]
 
 
-def set_commit_status(commit, state, description, context):
-    commit.create_status(
-        state=state,
-        description=description,
-        context=context,
-    )
-
-
 def remove_label(pull, label):
     labels = get_labels(pull=pull)
     if label in labels:
