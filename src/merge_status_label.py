@@ -1,3 +1,4 @@
+from src.constants import READY_FOR_MERGE
 from src.utils import add_label, get_labels, remove_label
 
 
@@ -6,9 +7,8 @@ def merge_status_label(pull, commit):
         print("No commit given")
         return
 
-    label = "Ready for merge"
     if commit.get_combined_status().state == "success":
-        add_label(pull=pull, label=label)
+        add_label(pull=pull, label=READY_FOR_MERGE)
     else:
-        if label in get_labels(pull=pull):
-            remove_label(pull=pull, label=label)
+        if READY_FOR_MERGE in get_labels(pull=pull):
+            remove_label(pull=pull, label=READY_FOR_MERGE)
