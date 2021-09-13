@@ -50,13 +50,11 @@ def labels_by_user_input(event_data, pull):
         semver_labels_to_add,
         semver_labels_to_remove,
     ) = get_semver_label_data(pull=pull, body=body)
-    semver_modified = semver_labels_to_add or semver_labels_to_remove
-    if semver_modified:
-        add_remove_labels(
-            pull=pull,
-            labels_to_add=semver_labels_to_add,
-            labels_to_remove=semver_labels_to_remove,
-        )
+    semver_modified = add_remove_labels(
+        pull=pull,
+        labels_to_add=semver_labels_to_add,
+        labels_to_remove=semver_labels_to_remove,
+    )
 
     last_commit.create_status(
         state=semver_status_state,

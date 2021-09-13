@@ -104,18 +104,22 @@ def semver_labels_in_pull_labels(pull):
 
 
 def add_remove_labels(pull, labels_to_add, labels_to_remove):
+    label_removed = False
     new_labels_to_add = labels_to_add.copy()
     labels_from_pull = get_labels(pull=pull)
 
     for label in labels_from_pull:
         if label in labels_to_remove:
             remove_label(pull=pull, label=label)
+            label_removed = True
         elif label in new_labels_to_add:
             print(f"Label {label} already exists in {pull.title}")
             new_labels_to_add.remove(label)
 
     for label in new_labels_to_add:
         add_label(pull=pull, label=label)
+
+    return new_labels_to_add or label_removed
 
 
 def get_semver_label_data(pull, body):
