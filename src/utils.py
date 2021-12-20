@@ -1,7 +1,6 @@
 import contextlib
 import os
 
-import yaml
 from github.GithubException import UnknownObjectException
 
 
@@ -54,13 +53,6 @@ def remove_label(pull, label):
 def add_label(pull, label):
     print(f"Adding {label} to {pull.title}")
     pull.add_to_labels(label)
-
-
-def get_repo_approvers():
-    with open("OWNERS", "r") as fd:
-        data = yaml.load(stream=fd.read(), Loader=yaml.SafeLoader)
-
-    return data["approvers"]
 
 
 def print_os_environment():
